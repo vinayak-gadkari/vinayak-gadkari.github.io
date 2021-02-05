@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="main.css" type="text/css" />
+<link rel="stylesheet" href="blog.css" type="text/css" />
+<link rel="alternate" type="application/rss+xml" title="Subscribe to this page..." href="feed.rss" />
+<title>Teams and Jira integration</title>
+</head><body>
+<div id="divbodyholder">
+<div class="headerholder"><div class="header">
+<div id="title">
+<h1 class="nomargin"><a class="ablack" href="http://example.com/blog/index.html">My Blog</a></h1>
+<div id="description">A blog about me</div>
+</div></div></div>
+<div id="divbody"><div class="content">
+<!-- entry begin -->
+<h3><a class="ablack" href="teams-and-jira-integration22539.html">
+Teams and Jira integration
+</a></h3>
+<!-- bashblog_timestamp: #202102050948.48# -->
+<div class="subtitle">February 05, 2021 &mdash; 
+Vinayak Gadkari
+</div>
+<!-- text begin -->
+
+<h2>Setup</h2>
+
+<hr />
+
+<p>https://www.msteams-atlassian.com/JiraServer/#authorization</p>
+
+<ol>
+<li>Add Jira Server App by clicking the ellipsis in the left bar.</li>
+<li>Open the Jira App in same or new tab.</li>
+<li>Type connect jira.company.com in the chat.</li>
+<li>Click on Sign-in and sign with your Company Microsoft account</li>
+<li>Get and enter d1-----0-e--c-4--1-8--0-c1--------ad as Jira connector id.</li>
+<li>Click on Authorize, authorize it on the opened web page and enter authorization token to complete the integration.</li>
+<li>Type help to explore.</li>
+</ol>
+
+<h2>Usage</h2>
+
+<hr />
+
+<ol>
+<li><p>help shows the following. Use these commands to work with individual Jira issues.</p>
+
+<p><strong>connect *Jira ID*</strong> - connect a Jira Server instance to your Microsoft Teams account</p>
+
+<p><strong>create</strong> - create a new issue</p>
+
+<p><strong>find</strong> - provide a summary keyword (e.g. <strong>find "as a user I want"</strong>) to find the issue</p>
+
+<p><strong>assign</strong> - assign the issue to yourself (e.g. <strong>assign MP-47</strong>)</p>
+
+<p><strong>edit</strong> - open the issue card to change priority, summary, and description of the issue</p>
+
+<p><strong>log</strong> - log time spent on the issue</p>
+
+<p><strong>watch</strong> - start watching the issue (e.g. <strong>watch MP-47</strong>)</p>
+
+<p><strong>unwatch</strong> - stop watching the issue (e.g. <strong>unwatch MP-47</strong>)</p>
+
+<p><strong>vote</strong> - vote on the issue</p>
+
+<p><strong>unvote</strong> - unvote on the issue</p>
+
+<p><strong>comment</strong> - comment the issue</p>
+
+<p><strong>disconnect</strong> - disconnect Jira Server instance you've connected from Microsoft Teams</p>
+
+<p><strong>cancel</strong> - cancel current dialog</p></li>
+<li><p>log <jira-id> may be the most useful command since you may do it on a daily basis.</p></li>
+<li><p>The horizontal bar shows other options like "Assigned to me", "Watched by me" etc..
+A good idea is to create a custom Jira filter and view it in the "My filters" section. Select this filter every time you visit this section, hopefully Atlassian fixes this soon.</p></li>
+</ol>
+
+<p>Tags: <a href='tag_productivity.html'>productivity</a>, <a href='tag_jira.html'>jira</a>, <a href='tag_teams.html'>teams</a></p>
+<!-- text end -->
+<!-- entry end -->
+</div>
+<div id="footer">CC by-nc-nd <a href="http://twitter.com/vsgadkari">Vinayak Gadkari</a> &mdash; <a href="mailto:vinayak&#46;gadkari&#64;gmail&#46;com">vinayak&#46;gadkari&#64;gmail&#46;com</a><br/>
+Generated with <a href="https://github.com/cfenollosa/bashblog">bashblog</a>, a single bash script to easily create blogs like this one</div>
+</div></div>
+</body></html>
