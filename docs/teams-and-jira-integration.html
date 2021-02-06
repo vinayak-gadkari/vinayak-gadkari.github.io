@@ -15,20 +15,24 @@
 </div></div></div>
 <div id="divbody"><div class="content">
 <!-- entry begin -->
-<h3><a class="ablack" href="teams-and-jira-integration22539.html">
+<h3><a class="ablack" href="teams-and-jira-integration.html">
 Teams and Jira integration
 </a></h3>
-<!-- bashblog_timestamp: #202102050948.48# -->
-<div class="subtitle">February 05, 2021 &mdash; 
+<!-- bashblog_timestamp: #202102060750.19# -->
+<div class="subtitle">February 06, 2021 &mdash; 
 Vinayak Gadkari
 </div>
 <!-- text begin -->
 
-<h2>Setup</h2>
+<p>If you are on the lookout for accessing Jira issues in Teams without asking the Jira administrator to install additional apps, Jira Server for Teams can be an option. The Jira Server connector uses built-in Webhooks functionality of Jira Server that doesn’t require third party Jira app installation. You still require the administrator for Webhook installation and also  configure firewall to allow outgoing traffic from Jira Server instance to Teams Connector app i.e. specifically need to add the address record of ‘connectors.msteams-atlassian.com’ to any sort of whitelist that controls network egress traffic..</p>
+
+<p><a href="https://techcommunity.microsoft.com/t5/microsoft-teams-blog/new-jira-server-integration-for-microsoft-teams/ba-p/327688">Microsft Teams Jira Server Connector</a></p>
 
 <hr />
 
-<p>https://www.msteams-atlassian.com/JiraServer/#authorization</p>
+<h2 id="_setup_">Setup</h2>
+
+<p><a href="https://www.msteams-atlassian.com/JiraServer/#authorization">https://www.msteams-atlassian.com/JiraServer/#authorization</a></p>
 
 <ol>
 <li>Add Jira Server App by clicking the ellipsis in the left bar.</li>
@@ -40,7 +44,7 @@ Vinayak Gadkari
 <li>Type help to explore.</li>
 </ol>
 
-<h2>Usage</h2>
+<h2 id="_usage_">Usage</h2>
 
 <hr />
 
@@ -72,12 +76,14 @@ Vinayak Gadkari
 <p><strong>disconnect</strong> - disconnect Jira Server instance you've connected from Microsoft Teams</p>
 
 <p><strong>cancel</strong> - cancel current dialog</p></li>
-<li><p>log <jira-id> may be the most useful command since you may do it on a daily basis.</p></li>
+<li><p>log &lt;jira-id> may be the most useful command since you may do it on a daily basis.</p></li>
 <li><p>The horizontal bar shows other options like "Assigned to me", "Watched by me" etc..
 A good idea is to create a custom Jira filter and view it in the "My filters" section. Select this filter every time you visit this section, hopefully Atlassian fixes this soon.</p></li>
 </ol>
 
 <p>Tags: <a href='tag_productivity.html'>productivity</a>, <a href='tag_jira.html'>jira</a>, <a href='tag_teams.html'>teams</a></p>
+
+
 
 
 <!-- text end -->

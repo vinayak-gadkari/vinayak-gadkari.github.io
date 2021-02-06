@@ -1,5 +1,9 @@
 Teams and Jira integration
 
+If you are on the lookout for accessing Jira issues in Teams without asking the Jira administrator to install additional apps, Jira Server for Teams can be an option. The Jira Server connector uses built-in Webhooks functionality of Jira Server that doesn’t require third party Jira app installation. You still require the administrator for Webhook installation and also  configure firewall to allow outgoing traffic from Jira Server instance to Teams Connector app i.e. specifically need to add the address record of ‘connectors.msteams-atlassian.com’ to any sort of whitelist that controls network egress traffic..
+
+[Microsft Teams Jira Server Connector](https://techcommunity.microsoft.com/t5/microsoft-teams-blog/new-jira-server-integration-for-microsoft-teams/ba-p/327688)
+
 ## Setup
 
 
