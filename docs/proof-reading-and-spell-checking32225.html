@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="main.css" type="text/css" />
+<link rel="stylesheet" href="blog.css" type="text/css" />
+<link rel="alternate" type="application/rss+xml" title="Subscribe to this page..." href="feed.rss" />
+<title>Proof reading and spell checking</title>
+</head><body>
+<div id="divbodyholder">
+<div class="headerholder"><div class="header">
+<div id="title">
+<h1 class="nomargin"><a class="ablack" href="https://vinayak-gadkari.github.io/index.html">Technoholic</a></h1>
+<div id="description">Programming and Productivity tips and tricks</div>
+</div></div></div>
+<div id="divbody"><div class="content">
+<!-- entry begin -->
+<h3><a class="ablack" href="proof-reading-and-spell-checking32225.html">
+Proof reading and spell checking
+</a></h3>
+<!-- bashblog_timestamp: #202102061835.05# -->
+<div class="subtitle">February 06, 2021 &mdash; 
+Vinayak Gadkari
+</div>
+<!-- text begin -->
+
+<p><img src="assets/spellcheck-title.jpg" alt="spellcheck-title" /></p>
+
+<p>Error proofing communication content is a vital part of any trade. Even people with strong grammar and spelling skills tend to make poor mistakes. Word processors like MS Word make help but they are not available every time, for example when one starts typing in notepad or other applications. You do not want to open an application which is slow to start and hogs memory just for doing a simple spell-check. The process of manual re-checking contents can be painful, however there are myriad of tools available that can make this process less laborious. Here’s a dash of such tools:</p>
+
+<hr />
+
+<h3 id="_1_tinyspell_http_tinyspell_numerit_com_">1) <a href="http://tinyspell.numerit.com/">TinySpell</a></h3>
+
+<p><img src="assets/spellcheck-tinyspell.jpg" alt="spellcheck-tinyspell" /></p>
+
+<p>The free variant is a tiny gem which beeps and pops up every time a mis-spelling occurs as you type on the fly. It can also check the clipboard contents.</p>
+
+<p>The dictionary is configurable so that you can keep on adding words. It can be configured to ignore certain applications like programming IDE’s, games where spell-check is not useful. The beep can be annoying at times and can be disabled accordingly.</p>
+
+<h3 id="_2_wordweb_http_wordweb_info_free_">2) <a href="http://wordweb.info/free/">WordWeb</a></h3>
+
+<p><img src="assets/spellcheck-wordweb.jpg" alt="spellcheck-wordweb" /></p>
+
+<p>This free English thesaurus/dictionary pops up a dictionary definition of the highlighted word, often supplemented by a sample sentence demonstrating the correct usage of the word. This can be triggered by clicking the system tray icon or with the default keyboard shortcut CTRL+ALT+W. It also suggests items like synonyms, antonyms, and related words. It also shows the corresponding Wiki page – an important feature while researching anything.</p>
+
+<h3 id="_3_gnu_aspell_http_aspell_net_win32_">3) <a href="http://aspell.net/win32/">GNU Aspell</a></h3>
+
+<p><img src="assets/spellcheck-gnu-icon.jpg" alt="spellcheck-gnu-icon" /></p>
+
+<p><img src="assets/spellcheck-aspell.jpg" alt="spellcheck-aspell" /></p>
+
+<p>This is a command-line spell checking utility intended for advanced users. It is also integrated with many applications , so it is very likely that you are using it already. The spell-checking is comparable to Microsoft Word (without the bloat) . Dictionaries for a wide number of languages can be downloaded from the Aspell website. The interface is rudimentary and not for the faint-hearted.</p>
+
+<p>An <a href="http://www.autohotkey.com/">Autohotkey</a> script that spell-checks the highlighted text in any item and replaces it with the spell-checked version is shown below (courtesy: MsgBox). The script copies the clipboard to a temporary text file, invokes Aspell to check this file and copies back the spell-checked text. The copied text removes all formatting, hence do not invoke this on formatted text like content copied from MS Word.</p>
+
+<div class="_markdown-code-bt"><pre style="display:none"></pre><pre><code>#z:: ; Spellcheck``  ``SoundBeep``  ``WinGet Id, Id, A``  ``Send ^c``  ``ClipWait 2``  ``TmpFile = %TEMP%\SpellCheckerTmp.txt``  ``FileDelete %TmpFile%``  ``FileAppend %Clipboard%, %TmpFile%``  ``RunWait ``"%MYBIN%\Aspell\bin\aspell.exe"` `check ``"%TEMP%\SpellCheckerTmp.txt"``  ``FileRead Clipboard, %TmpFile%``  ``WinActivate ahk_id %Id%``  ``WinWaitActive ahk_id %Id%``  ``Send ^``v``  ``return
+</code></pre></div>
+
+<h3 id="_4_microsoft_speech_api_">4) Microsoft Speech API</h3>
+
+<p>This tool is a combination of a VB script (speak.vbs) and an <a href="http://www.autohotkey.com/">Autohotkey</a> script to read out the highlighted text. This uses Microsoft Speech API that is typically installed on Windows 2000/XP and later. The VB script is tied to a hotkey in <a href="http://www.autohotkey.com/">Autohotkey</a> and invoked using wscript to avoid the ugly command window popup.</p>
+
+<p>Proof reading is the ultimate and final check – one can quickly spot out the remaining mistakes as the words are being read out.</p>
+
+<h6 id="_speak_vbs_">Speak.vbs</h6>
+
+<p><code>`visual basic
+' Speaks text passed on</code>command<code></code>line<code>Dim sapi</code>set<code></code>sapi = CreateObject(<code>"sapi.spvoice"</code>)``sapi.Speak WScript.Arguments.Item(0)</p>
+
+<div class="_markdown-code-bt"><pre style="display:none"></pre><pre><code>```visual basic
+^``#s:: ; Clipboard to speech`` ``Send, ^c`` ``clipboard = %clipboard%`` ``StringReplace, clipboard, clipboard, ",,All`` ``Run, wscript ``"%MYBIN%\speak.vbs"` `"%clipboard%"``,,MIN`` ``return
+</code></pre></div>
+
+<p>Tags: <a href='tag_productivity.html'>productivity</a>, <a href='tag_writing.html'>writing</a></p>
+<!-- text end -->
+<!-- entry end -->
+</div>
+<div id="footer">CC by-nc-nd <a href="http://twitter.com/vsgadkari">Vinayak Gadkari</a> &mdash; <a href="mailto:vinayak&#46;gadkari&#64;gmail&#46;com">vinayak&#46;gadkari&#64;gmail&#46;com</a><br/>
+Generated with <a href="https://github.com/cfenollosa/bashblog">bashblog</a>, a single bash script to easily create blogs like this one</div>
+</div></div>
+</body></html>

@@ -2,9 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
 <channel><title>Technoholic</title><link>https://vinayak-gadkari.github.io/index.html</link>
 <description>Programming and Productivity tips and tricks</description><language>en</language>
-<lastBuildDate>Sat, 06 Feb 2021 10:59:49 +0530</lastBuildDate>
-<pubDate>Sat, 06 Feb 2021 10:59:49 +0530</pubDate>
+<lastBuildDate>Sat, 06 Feb 2021 18:35:10 +0530</lastBuildDate>
+<pubDate>Sat, 06 Feb 2021 18:35:10 +0530</pubDate>
 <atom:link href="https://vinayak-gadkari.github.io/feed.rss" rel="self" type="application/rss+xml" />
+<item><title>
+Proof reading and spell checking
+</title><description><![CDATA[
+
+<p><img src="assets/spellcheck-title.jpg" alt="spellcheck-title" /></p>
+
+<p>Error proofing communication content is a vital part of any trade. Even people with strong grammar and spelling skills tend to make poor mistakes. Word processors like MS Word make help but they are not available every time, for example when one starts typing in notepad or other applications. You do not want to open an application which is slow to start and hogs memory just for doing a simple spell-check. The process of manual re-checking contents can be painful, however there are myriad of tools available that can make this process less laborious. Here’s a dash of such tools:</p>
+
+<hr />
+]]></description><link>https://vinayak-gadkari.github.io/proof-reading-and-spell-checking32225.html</link>
+<guid>https://vinayak-gadkari.github.io/./proof-reading-and-spell-checking32225.html</guid>
+<dc:creator>Vinayak Gadkari</dc:creator>
+<pubDate>Sat, 06 Feb 2021 18:35:05 +0530</pubDate></item>
 <item><title>
 Personal Kanban on the desktop
 </title><description><![CDATA[
