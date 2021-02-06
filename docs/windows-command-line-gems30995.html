@@ -1,0 +1,198 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="main.css" type="text/css" />
+<link rel="stylesheet" href="blog.css" type="text/css" />
+<link rel="alternate" type="application/rss+xml" title="Subscribe to this page..." href="feed.rss" />
+<title>Windows Command line Gems</title>
+</head><body>
+<div id="divbodyholder">
+<div class="headerholder"><div class="header">
+<div id="title">
+<h1 class="nomargin"><a class="ablack" href="https://vinayak-gadkari.github.io/index.html">Technoholic</a></h1>
+<div id="description">Programming and Productivity tips and tricks</div>
+</div></div></div>
+<div id="divbody"><div class="content">
+<!-- entry begin -->
+<h3><a class="ablack" href="windows-command-line-gems30995.html">
+Windows Command line Gems
+</a></h3>
+<!-- bashblog_timestamp: #202102060945.50# -->
+<div class="subtitle">February 06, 2021 &mdash; 
+Vinayak Gadkari
+</div>
+<!-- text begin -->
+
+<p><img src="assets\jewellery.jpg" alt="jewellery" /></p>
+
+<p>For beginners, here’s a list of windows command line tools that are really useful.</p>
+
+<ol>
+<li>driverquery : installed drivers.</li>
+<li>openfiles : files opened by network users</li>
+<li>netstat : monitor port activity</li>
+<li>recover : recover corrupt file</li>
+<li>systeminfo : detailed configuration information</li>
+<li>schtasks : schedule tasks</li>
+<li>subst : use alternate drive letter</li>
+<li>net use : connect/disconnect a shared resource</li>
+<li>pushd/popd : switch directory conveniently</li>
+<li>qwinsta/rwinsta : Query/Remove Remote Desktop connections</li>
+</ol>
+
+<hr />
+
+<p>Here’s the list:</p>
+
+<ol class="_markdown-ol">
+<li type="1" value="1" class="_markdown-li">driverquery
+This tool creates a list of installed drivers.</li>
+</ol>
+
+<div class="_markdown-code-bt"><pre style="display:none"></pre><pre><code>driverquery /v /FO csv &gt; drivers.csv
+</code></pre></div>
+
+<p>A useful variant is shown above. </p>
+
+<p><img src="assets\driverquery-op.png" alt="driverquery-op" /></p>
+
+<p>The csv file can be pretty formatted in Excel as shown. One can also use the Windows Device Manager for viewing the present list of installed drivers. However, driverquery rocks when it comes to debugging a faulty driver installation. One can look at the history information to see what version worked well and when.</p>
+
+<ol class="_markdown-ol">
+<span class="_markdown-ol-incr"></span>
+<li type="1" value="2" class="_markdown-li">openfiles – find files opened by network users</li>
+</ol>
+
+<div class="_markdown-code-bt"><pre style="display:none"></pre><pre><code>openfiles /query (query opened files)
+
+openfiles /disconnect (disconnect opened file(s))
+
+openfiles /local on (enable/disable displaying local files)
+</code></pre></div>
+
+<p>This command will show the list of users and the files opened by them.</p>
+
+<p>Use the third variant if you get an error “The system global flag ‘maintain objects list’ needs to be enabled to see local opened files”.</p>
+
+<p>Nirsoft OpenedFilesView, Unlocker and LockHunter are excellent third party utilities that show a graphical view of locked files and also help in unlocking the file.</p>
+
+<ol class="_markdown-ol">
+<span class="_markdown-ol-incr-2"></span>
+<li type="1" value="3" class="_markdown-li">netstat – monitor port activity</li>
+</ol>
+
+<div class="_markdown-code-bt"><pre style="display:none"></pre><pre><code>netstat –a 30 (monitor)
+
+netstat –an | find -i “listening” (display TCP and UDP connections, filter out listened to connections)
+
+netstat –b 5 (display outbound connections)
+
+netstat – o (display owning process ID associated with each connection)
+</code></pre></div>
+
+<p>This command displays and monitors the TCP/IP connections and a whole slew of IP information.</p>
+
+<p>Show all connections and monitor at the specified refresh rate
+Find out the connections which are already established, listening and other states.  This is very useful in finding out if a port is already in use.
+Check if some mal-ware installed on your system is trying to connect outside.
+Display the process ids. The ids can be looked up  in Task Manager or using a tool like PULIST from the W2K Resource Kit.</p>
+
+<p><img src="assets\netstat-listen.png" alt="netstat-listen" /></p>
+
+<p><img src="assets\netstat-b.png" alt="netstat-b" /></p>
+
+<ol class="_markdown-ol">
+<span class="_markdown-ol-incr-2"></span>
+<span class="_markdown-ol-incr"></span>
+<li type="1" value="4" class="_markdown-li">recover – recover corrupt file</li>
+</ol>
+
+<div class="_markdown-code-bt"><pre style="display:none"></pre><pre><code>recover filename.ext
+</code></pre></div>
+
+<p>This command attempts to recover as much information as possible from the specified file from a disk with damaged sectors.</p>
+
+<p>This command attempts to recover as much information as possible from the specified file from a disk with damaged sectors.</p>
+
+<ol start="5" class="_markdown-ol">
+<li type="1" value="5" class="_markdown-li">systeminfo– displays detailed configuration information</li>
+</ol>
+
+<div class="_markdown-code-bt"><pre style="display:none"></pre><pre><code>systeminfo /FO csv
+</code></pre></div>
+
+<p>As with driverquery, one can beautify the output in Excel.</p>
+
+<ol start="5" class="_markdown-ol">
+<span class="_markdown-ol-incr"></span>
+<li type="1" value="6" class="_markdown-li">schtasks– scheduling command to run periodically</li>
+</ol>
+
+<div class="_markdown-code-bt"><pre style="display:none"></pre><pre><code>schtasks /sc DAILY /TN “My Task” /TR “c:\test\runthis.bat” /ST 12:00 (schedule task to run daily at 12:00)
+
+schtasks /change /TN “My Task” /ST 14:00 (change task details)
+
+schtasks /delete /TN “My Task” (delete task)
+
+schtasks /run /TN “My Task” (run task)
+</code></pre></div>
+
+<ol start="5" class="_markdown-ol">
+<span class="_markdown-ol-incr-2"></span>
+<li type="1" value="7" class="_markdown-li">subst– associate path with a drive letter</li>
+</ol>
+
+<div class="_markdown-code-bt"><pre style="display:none"></pre><pre><code>subst w: c:\Documents\Work\PresentCompany\PresentProject (substitute drive for path)
+
+subst /d w: (delete subst’ed drive)
+</code></pre></div>
+
+<p>To make the substitution permanent across reboots, one can put the command in a start-up batch file or in the registry or by using third party tools like psubst or use ‘net use’ instead.</p>
+
+<ol start="5" class="_markdown-ol">
+<span class="_markdown-ol-incr-2"></span>
+<span class="_markdown-ol-incr"></span>
+<li type="1" value="8" class="_markdown-li">net use– connect/disconnect a shared resource</li>
+</ol>
+
+<div class="_markdown-code-bt"><pre style="display:none"></pre><pre><code>net use w: “\\server\C$” /persistent:yes /user user1 /savecred (persistent connection to C drive as user1, save credentials)
+
+net use w: /delete (delete mapped drive)
+
+net use (display mapped drives)
+</code></pre></div>
+
+<ol start="5" class="_markdown-ol">
+<span class="_markdown-ol-incr-2"></span>
+<span class="_markdown-ol-incr-2"></span>
+<li type="1" value="9" class="_markdown-li">pushd/popd– push/pop current directory to switch</li>
+</ol>
+
+<div class="_markdown-code-bt"><pre style="display:none"></pre><pre><code>pushd c:\worktodo (push the current directory before switching)
+
+popd (pop back current directory)
+
+pushd \\server\C$ (temporarily map a drive until popd is called)
+</code></pre></div>
+
+<ol start="10" class="_markdown-ol">
+<li type="1" value="10" class="_markdown-li">qwinsta/rwinsta– Query/Remove remote Desktop connections</li>
+</ol>
+
+<div class="_markdown-code-bt"><pre style="display:none"></pre><pre><code>qwinsta (display RDP sessions)
+
+rwinsta &lt;id&gt; (remove RDP session specified by id)
+</code></pre></div>
+
+<p>This command is handy when you do not want another RDP connection hogging your system.</p>
+
+<p>Tags: <a href='tag_windows.html'>windows</a>, <a href='tag_command-line.html'>command-line</a></p>
+
+<!-- text end -->
+<!-- entry end -->
+</div>
+<div id="footer">CC by-nc-nd <a href="http://twitter.com/vsgadkari">Vinayak Gadkari</a> &mdash; <a href="mailto:vinayak&#46;gadkari&#64;gmail&#46;com">vinayak&#46;gadkari&#64;gmail&#46;com</a><br/>
+Generated with <a href="https://github.com/cfenollosa/bashblog">bashblog</a>, a single bash script to easily create blogs like this one</div>
+</div></div>
+</body></html>
