@@ -1,0 +1,298 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="main.css" type="text/css" />
+<link rel="stylesheet" href="blog.css" type="text/css" />
+<link rel="alternate" type="application/rss+xml" title="Subscribe to this page..." href="feed.rss" />
+<title>Code Review with ReviewBoard</title>
+</head><body>
+<div id="divbodyholder">
+<div class="headerholder"><div class="header">
+<div id="title">
+<h1 class="nomargin"><a class="ablack" href="https://vinayak-gadkari.github.io/index.html">Technoholic</a></h1>
+<div id="description">Programming and Productivity tips and tricks</div>
+</div></div></div>
+<div id="divbody"><div class="content">
+<!-- entry begin -->
+<h3><a class="ablack" href="code-review-with-reviewboard11363.html">
+Code Review with ReviewBoard
+</a></h3>
+<!-- bashblog_timestamp: #202102062220.53# -->
+<div class="subtitle">February 06, 2021 &mdash; 
+Vinayak Gadkari
+</div>
+<!-- text begin -->
+
+<p><img src="assets/reviewboard-icon.png" alt="reviewboard-icon" /></p>
+
+<h2 id="_why_reviewboard_">Why ReviewBoard</h2>
+
+<p>After having tried out various review methods like direct review, reviews over email, pair programming etc, I have found that a combination of tool-assisted code review and direct review (on an as needed basis) works out to be the best in terms of efforts spent and quality of the output.
+<a href="http://support.smartbear.com/">SmartNBear.com:Pros and Cons of Four Kinds of Code</a> mentions the pros and cons of the various types of reviews.</p>
+
+<hr />
+
+<p>My first experience with <a href="http://www.atlassian.com/software/crucible/overview">Crucible by Atlassian</a> was a bit unnerving. However there were many obvious advantages that I quickly noticed:</p>
+
+<p><img src="assets/reviewboard-crucible.png" alt="reviewboard-crucible" /></p>
+
+<ul>
+<li>Making a comment right where it make sense. i.e. near a particular line of code. This is a killer feature.</li>
+<li>Enforcement of workflow</li>
+<li>Close integration with Perforce (since we use Perforce)</li>
+</ul>
+
+<p>However when the licensing costs (starting from US$2400) became a problem, I started scouting for a free tool that offered similar features. <a href="http://www.reviewboard.org/">ReviewBoard</a> based on Python and <a href="http://httpd.apache.org/">Apache Web Server</a> seemed to fit the bill. Integration with <a href="http://www.perforce.com/">Perforce</a> is the best advantage as compared to other tools which are mostly integrated with <a href="http://en.wikipedia.org/wiki/SVN">SVN</a>. Although I did not get the luxury of trying out other tools like Mondrian and <a href="http://codestriker.sourceforge.net/">CodeStriker</a>, reviews like <a href="http://blog.memonic.com/en/2011/05/03/reviewboard-a-great-code-review-tool/">ReviewBoard: a great code review tool</a> provided very encouraging evidence.</p>
+
+<h2 id="_the_pilot_">The Pilot</h2>
+
+<p>The OK documentation and articles like <a href="http://waveydavey.wordpress.com/home/computing/installing-review-board-10-alpha-2-on-windows-for-perforce/">Installing Review Board on Windows for Perforce</a> provided good relief during installation. The initial hiccups with the setup (getting the right combination of software) were a deterrent. But after a pilot and few actual code review cycles, the review engine started humming steadily and picking up gyrations. We have already started innovating more <a href="http://en.wikipedia.org/wiki/Kaizen">kaizens </a>as mentioned below.</p>
+
+<p><img src="assets/reviewboard-dashboard.png" alt="reviewboard-dashboard" /></p>
+
+<p>Reviewboard DashBoard</p>
+
+<h3 id="_workflow_">Workflow</h3>
+
+<p><img src="assets/reviewboard-workflow.png" alt="reviewboard-workflow" /></p>
+
+<p>There are four major steps in the workflow we have adopted.</p>
+
+<p><strong>1) Create Review request (Developer)</strong></p>
+
+<ol>
+<li>Create a P4 change-list. Exclude (copy over to a temporary change-list) all files that need not or cannot be reviewed in ReviewBoard – examples: images, word documents etc.. You can copy back the same before actually submitting the change-list in P4.</li>
+<li>Submit the P4 change-list for review using the post-review tool (or the P4 wrapper mentioned below). The tool automatically generates the diffs, uploads them to the Review Board server. Hope for the best!</li>
+</ol>
+
+<h4 id="_2_review_the_code_reviewer_">2) Review the code (Reviewer)</h4>
+
+<ol>
+<li>Visit the review request page on Review Board by visiting Incoming Reviews on your Review Board dashboard and selecting the appropriate review request.</li>
+<li>Review the diff changes by selecting View Diff</li>
+<li>Inline comments can be added by clicking on the line number in the left hand margin. It is recommended that an issue be opened for each comment (the default option) so that the developer does not forget to close the same.</li>
+<li>Add a general review comment by selecting Review on the review request page, or, after adding inline comments, select Edit Review (which appears as a drop-down header once comments have been made)</li>
+<li>Publish your review by clicking the Publish button or by selecting Review on the review request page and then Publish.</li>
+</ol>
+
+<h4 id="_3_respond_to_review_developer_">3) Respond to Review (Developer)</h4>
+
+<ol>
+<li>Resolve/reject the issues with appropriate comments.</li>
+<li>Publish the changes.</li>
+</ol>
+
+<p>Rinse and repeat the “Review the code” and “Respond to Review” steps until the reviewer and developer are happy.</p>
+
+<h4 id="_4_close_review_request_developer_">4) Close Review request (Developer)</h4>
+
+<ol>
+<li>After few rounds, the reviewer blesses the code with “Ship It”</li>
+<li>The developer can now submit his/her change-list. He/she also closes the change-list in ReviewBoard.</li>
+</ol>
+
+<h3 id="_kaizens_">Kaizens</h3>
+
+<h4 id="_67076e8afd08939799a2fab3264ca32f_">1) Bundling the client-side post-review tool in a single post-review.exe</h4>
+
+<p>The post-review tool provided by Reviewboard is dependent on Python 2.5 and hence requires deployment of Python on each client. Client deployment for a sizeable no. of developer machines can quickly turn into a mammoth exercise. Bundling the dependencies in a single zip alleviates the problem.</p>
+
+<p>This involves using <a href="http://www.py2exe.org/">py2exe</a> as mentioned in <a href="http://waveydavey.wordpress.com/home/computing/installing-review-board-10-alpha-2-on-windows-for-perforce/">Installing Review Board on Windows for Perforce</a> to create the executable. Change REPOSITORY and REVIEWBOARD_URL in .reviewboardrc as per your ReviewBoard installation.</p>
+
+<h4 id="_2_a_wrapper_around_post-review_exe_">2) A wrapper around post-review.exe</h4>
+
+<p>This batch script is a wrapper around the post-review tool and can be used for submitting typical review requests. If the reviewer or additional details need to be specified, one can use the Reviewboard site to upload the P4 change-list or the post-review tool directly.</p>
+
+<p>Ensure that p4 set command reveals that P4USER and P4PORT are properly set. Also ensure that p4 clientspec is correct. I.e. Run “p4 client” in your p4ws root directory and check the spec. The P4 wrapper also handles situations where P4 password is no longer needed because of automatic logon.</p>
+
+<blockquote>
+<p>p4postreview.bat [p4changelistno to review] [p4password]
+p4password: Optional parameter, not required if you are already logged on to P4</p>
+</blockquote>
+
+<p><a href="https://fastandsteady.wordpress.com/2012/03/28/review-with-reviewboard/#">?</a></p>
+
+<div class="_markdown-code-bt"><pre style="display:none"></pre><pre><code>@echo off
+setlocal EnableDelayedExpansion
+
+REM ----------------------------------------------
+REM Wrapper around postreview.exe
+REM Vinayak Gadkari
+REM ----------------------------------------------
+
+REM Command line params processing
+set p4clist=%1
+set p4password=%2
+
+if "%p4clist%"=="" (echo Error: Missing P4 changelist no.^^!^^! &amp; goto Help)
+if "%p4password%"=="" (echo No P4 password specified^^!^^! Continuing...)
+
+REM P4 logon if P4 password is specified
+if not "%p4password%"=="" (
+ echo.%p4password%|p4 login
+ if %errorlevel% NEQ 0 (echo Error: Failed to logon to P4^^!^^! &amp; goto :eof)
+ )
+
+REM Get P4USER
+for /F "tokens=2" %%A in ('p4 user -o ^| grep -e "^User:"') do (set p4user=%%A)
+if "%p4user%"=="" (echo Error: Could not retrieve P4USER^^!^^! &amp; goto :eof)
+
+REM Ensure that the specified changelist belongs to the current user
+for /F "tokens=*" %%A in ('p4 changes -s pending -u %p4user% ^| grep -e %p4clist%') do (set foundp4clist=%%A)
+set toproceed=
+if "%foundp4clist%"=="" (
+ choice /C yn /D n /T 10 /M "P4 Changelist %p4clist% does not belong to %p4user%, do you still want to proceed?"
+ if "!errorlevel!"=="1" set toproceed=y
+ ) else (
+ set toproceed=y
+ )
+
+REM Publish review request to Reviewboard
+if "%toproceed%" == "y" (
+ pushd %~dp0
+ echo Publishing review request for user %p4user% for changelist %p4clist%...
+ if not "%p4password%"=="" (
+ postreview.exe --username=%p4user% --password=%p4password% --publish %p4clist%
+ ) else (
+ postreview.exe --publish %p4clist%
+ )
+ popd
+ )
+
+exit /b
+
+REM ------------------------------------------------------------------------------
+REM Help
+REM ------------------------------------------------------------------------------
+:help
+echo Usage: p4postreview.bat [p4changelistno to review] [p4password]
+echo p4password: Optional parameter, not required if you are already logged on to P4.
+exit /b
+</code></pre></div>
+
+<h4 id="_3_daily_backup_for_the_mysql_database_">3) Daily backup for the MySql database</h4>
+
+<p>This batch script is scheduled to run daily and creates a time stamped sql backup. <a href="http://www.gnu.org/software/gzip/">Gnu gzip</a> is used for zipping up the dump and should be present in the same directory as the batch script.</p>
+
+<p><a href="https://fastandsteady.wordpress.com/2012/03/28/review-with-reviewboard/#">?</a></p>
+
+<div class="_markdown-code-bt"><pre style="display:none"></pre><pre><code>@echo off
+setlocal
+
+set BACKUP_DIR=
+set SQLDUMP_FILE=mysql
+
+set day=%date:~8,2%
+set mon=%date:~5,2%
+set year=%date:~0,4%
+
+if 1%year% LSS 200 if 1%year% LSS 170 (set year=20%year%) else (set year=19%year%)
+set /a day=100%day%%%100,mon=100%mon%%%100
+set /a z=14-mon,z/=12,y=year+4800-z,m=mon+12*z-3,weekday=153*m+2
+set /a weekday=weekday/5+day+y*365+y/4-y/100+y/400-2472630,weekday%%=7,weekday+=1
+
+for /f "tokens=%weekday%" %%a in ('echo/Mon Tue Wed Thu Fri Sat Sun') do set weekday=%%a
+
+set filename=%SQLDUMP_FILE%(%day%.%mon%.%year%)(%weekday%).dump
+
+echo Dumping Reviewboard Mysql database to %filename% on %BACKUP_DIR%...
+pushd %BACKUP_DIR%
+mysqldump --opt -uroot -ppassword reviewboarddb | %~dp0gzip &gt; %filename%
+popd
+</code></pre></div>
+
+<h4 id="_4_getting_comments_for_a_particular_user_">4) Getting comments for a particular user</h4>
+
+<p>This tool is a combination of</p>
+
+<ul>
+<li>rb-getcommentsforuser.sql: sql script to be run against the mysql database
+${reviewer_name} and ${submitter_name} are placeholders for the reviewer and submitter user names respectively.</li>
+</ul>
+
+<p><a href="https://fastandsteady.wordpress.com/2012/03/28/review-with-reviewboard/#">?</a></p>
+
+<div class="_markdown-code-bt"><pre style="display:none"></pre><pre><code>use reviewboarddb;
+
+select @reviewer_id := id from auth_user where username = '${reviewer_name}';
+select @submitter_id := id from auth_user where username = '${submitter_name}';
+select rrc.comment_id, rc.text, rrr.id from reviews_comment rc, reviews_review_comments rrc, reviews_review rr, reviews_reviewrequest rrr
+    where rrr.submitter_id=@submitter_id AND rrr.id=rr.review_request_id  AND rrc.review_id=rr.id AND rrc.comment_id=rc.id
+    order by rrr.id desc
+</code></pre></div>
+
+<ul>
+<li>getallcomments.bat: a batch wrapper around the sql
+This script replaces the placeholders with the user names specified in the command line. It invokes mysql to create the report. One can open this in Excel for pretty formatting.</li>
+</ul>
+
+<div class="_markdown-code-bt"><pre style="display:none"></pre><pre><code>@echo off
+setlocal
+
+if "%1"=="" goto Help
+if "%2"=="" goto Help
+if "%3"=="" goto Help
+if "%4"=="" goto Help
+
+set mysqluser=%1
+set mysqlpassword=%2
+set submitter_name=%3
+set reviewer_name=%4
+
+pushd %~dp0
+sed -e "s/${submitter_name}/%submitter_name%/" -e "s/${reviewer_name}/%reviewer_name%/" rb-getcommentsforuser.sql &gt; %TEMP%\rb-getcommentsforuser.sql
+type %TEMP%\rb-getcommentsforuser.sql
+mysql.exe -u %mysqluser% -p%mysqlpassword% &lt;%TEMP%\rb-getcommentsforuser.sql
+popd
+
+exit /b
+
+:Help
+echo Usage: %~nx0 [sqluser] [sqlpassword] [submitter_name] [reviewer_name]
+exit /b
+</code></pre></div>
+
+<ul>
+<li>a batch script to invoke the previous batch file by using the excellent <a href="http://technet.microsoft.com/en-us/sysinternals/bb897553">psexec</a> utility. The output can be opened in Excel and formatted accordingly.</li>
+</ul>
+
+<h4 id="_5_tagging_comments_for_metrics_classification_">5) Tagging comments for metrics &amp; classification</h4>
+
+<p>Sample tags like the ones below can be used for calculating metrics and classification. A keyboard macro tool like <a href="http://www.autohotkey.com/">Autohotkey</a> can be used for quick tagging.</p>
+
+<blockquote>
+<p>[repeat]: indicates that the comment is repeated from previous review</p>
+
+<p>[bug]: bug</p>
+
+<p>[high/low/med]: Indicates priority, default is Medium
+[rfs]: RFS deviation
+[good/bad]: Indicates quality of code (It is important to appreciate good code also)
+[opt] Performance optimization (not essential, but good to-do)
+[refactor] Refactor code
+[format] Code formatting
+[?]: Appended to the above tags if the reviewer is not sure</p>
+</blockquote>
+
+<h1 id="_problems_">Problems</h1>
+
+<ul>
+<li>The post-review tool fails for large diffs/file-sets.
+Workaround: Distribute the workload amongst multiple review requests and remove large binary files from the file-set.</li>
+<li>The tool is not suitable for reviewing formatting changes.
+Workaround: Developer can share the code-base directory with the reviewer. The reviewer can bypass the tool and review the code in the code-base directory.</li>
+<li>No option to integrate with bug tracking systems like Jira. The issue functionality is limited with no way of labelling the issue priority/quality/nature etc..
+Workaround: Use Gmail-like tags in the comments themselves. This should help us to analyse the review effectiveness later.</li>
+<li>The Reports functionality does not exist and can be satisfied in part by looking at the Database view. However even the Database view shows a per-table screen which is not useful for reports requiring joins across tables.
+Workaround: Create a report directly from the MySql database. One needs to understand the schema first.</li>
+</ul>
+
+<p>Tags: <a href='tag_java.html'>java</a>, <a href='tag_review.html'>review</a></p>
+<!-- text end -->
+<!-- entry end -->
+</div>
+<div id="footer">CC by-nc-nd <a href="http://twitter.com/vsgadkari">Vinayak Gadkari</a> &mdash; <a href="mailto:vinayak&#46;gadkari&#64;gmail&#46;com">vinayak&#46;gadkari&#64;gmail&#46;com</a><br/>
+Generated with <a href="https://github.com/cfenollosa/bashblog">bashblog</a>, a single bash script to easily create blogs like this one</div>
+</div></div>
+</body></html>

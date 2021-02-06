@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="main.css" type="text/css" />
+<link rel="stylesheet" href="blog.css" type="text/css" />
+<link rel="alternate" type="application/rss+xml" title="Subscribe to this page..." href="feed.rss" />
+<title>Tomcat: Class loaders mechanism</title>
+</head><body>
+<div id="divbodyholder">
+<div class="headerholder"><div class="header">
+<div id="title">
+<h1 class="nomargin"><a class="ablack" href="https://vinayak-gadkari.github.io/index.html">Technoholic</a></h1>
+<div id="description">Programming and Productivity tips and tricks</div>
+</div></div></div>
+<div id="divbody"><div class="content">
+<!-- entry begin -->
+<h3><a class="ablack" href="tomcat-class-loaders-mechanism.html">
+Tomcat: Class loaders mechanism
+</a></h3>
+<!-- bashblog_timestamp: #202102062158.13# -->
+<div class="subtitle">February 06, 2021 &mdash; 
+Vinayak Gadkari
+</div>
+<!-- text begin -->
+
+<p><img src="assets/tomcat-webserver.jpg" alt="tomcat-webserver" /></p>
+
+<p>Tomcat creates the class-loaders with the parent-child hierarchy as shown in the diagram. The class loading is fairly intuitive. However a pragmatic developer needs to understand it properly to avoid problem with class instantiation since it differs a bit from the typical Java class loading mechanism.</p>
+
+<hr />
+
+<p>Tomcat loads classes in the order shown below also described extensively in the <a href="http://tomcat.apache.org/tomcat-7.0-doc/class-loader-howto.html">Tomcat documentation</a>. The quirk with the WebAppClassLoader is that it searches it’s local repositories first before delegating to the parent class loader, the exception being the JRE base classes.</p>
+
+<p><img src="assets/tomcat-class-loaders.jpg" alt="tomcat-class-loaders" /></p>
+
+<h3 id="_web_app_class_loading_order_">Web App class loading order</h3>
+
+<table border="1" cellspacing="0" cellpadding="2" class="_markdown-table">
+  <tr class="_markdown-row-hdr"><th>Loader</th><th>What is loaded?</th></tr>
+  <tr class="_markdown-row-odd"><td>Web Application class loader</td><td>$CATALINA_HOME/webapps/&lt;webapp>/WEB-INF/lib,$CATALINA_HOME/webapps/&lt;webapp>/WEB-INF/classes</td></tr>
+  <tr class="_markdown-row-even"><td>Bootstrap class loader</td><td>JRE base and endorsed classes, $CATALINA_HOME/endorsed</td></tr>
+  <tr class="_markdown-row-odd"><td>System class loader</td><td>$CATALINA_HOME/bin/bootstrap.jar,$CATALINA_HOME/bin/tomcat-juli.jar</td></tr>
+  <tr class="_markdown-row-even"><td>Common class loader</td><td>$CATALINA_HOME/lib</td></tr>
+</table>
+
+<h3 id="_few_other_quirks_">Few other quirks</h3>
+
+<ul>
+<li><p>Tomcat’s way of resolving class-paths is different from a typical Java program.
+The JVM bootstrap loader loads the core Java libraries similar to a typical Java program using the JAVA_HOME environment variable. The start-up script overwrites the system class path and loads bootstrap.jar and tomcat-juli.jar. As a result, class-paths declared in the system class-path are not visible to Tomcat. These class-paths can be declared in $CATALINA_HOME/conf/catalina.properties instead.</p></li>
+<li><p>Tomcat’s way of resolving class-paths has differed from release to release.
+Server and shared loaders are handles by the common loader if the attributes are not specifically defined. One can also specify an external repository.</p></li>
+</ul>
+
+<p>Tags: <a href='tag_tomcat.html'>tomcat</a>, <a href='tag_java.html'>java</a></p>
+<!-- text end -->
+<!-- entry end -->
+</div>
+<div id="footer">CC by-nc-nd <a href="http://twitter.com/vsgadkari">Vinayak Gadkari</a> &mdash; <a href="mailto:vinayak&#46;gadkari&#64;gmail&#46;com">vinayak&#46;gadkari&#64;gmail&#46;com</a><br/>
+Generated with <a href="https://github.com/cfenollosa/bashblog">bashblog</a>, a single bash script to easily create blogs like this one</div>
+</div></div>
+</body></html>

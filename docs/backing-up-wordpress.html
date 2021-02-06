@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="main.css" type="text/css" />
+<link rel="stylesheet" href="blog.css" type="text/css" />
+<link rel="alternate" type="application/rss+xml" title="Subscribe to this page..." href="feed.rss" />
+<title>Backing up WordPress</title>
+</head><body>
+<div id="divbodyholder">
+<div class="headerholder"><div class="header">
+<div id="title">
+<h1 class="nomargin"><a class="ablack" href="https://vinayak-gadkari.github.io/index.html">Technoholic</a></h1>
+<div id="description">Programming and Productivity tips and tricks</div>
+</div></div></div>
+<div id="divbody"><div class="content">
+<!-- entry begin -->
+<h3><a class="ablack" href="backing-up-wordpress.html">
+Backing up WordPress
+</a></h3>
+<!-- bashblog_timestamp: #202102062225.30# -->
+<div class="subtitle">February 06, 2021 &mdash; 
+Vinayak Gadkari
+</div>
+<!-- text begin -->
+
+<p><img src="assets/wordpress-icon.png" alt="wordpress-icon" /></p>
+
+<p>Backup has been on my mind, since I started blogging on WordPress. No blog owner wants to go through the pain of losing his ideas and re-creating his writings again.</p>
+
+<p>After a night worth of efforts, here’s a simple script to backup a WordPress.com hosted blog in two ways.</p>
+
+<hr />
+
+<p>Two Ways:</p>
+
+<ol>
+<li>Mirroring the entire blog site</li>
+<li>Using the “Export” feature of WordPress.com to export the blog site to a local xml file.
+This is a WordPress-only feature. The xml file can be imported in WordPress.com.</li>
+</ol>
+
+<h3 id="_steps_">Steps:</h3>
+
+<ul>
+<li>Use the Chrome extension <a href="https://chrome.google.com/extensions/detail/lopabhfecdfhgogdbojmaicoicjekelh">Chrome cookie.txt export extension</a> to download cookies to a file cookies.txt to be stored in the backup directory</li>
+<li>Use <a href="http://www.gnu.org/software/wget/">wget</a> (command line downloader) to download the site. You can tweak the various wget options to download the site the way you want it.</li>
+</ul>
+
+<h4 id="_batch_script_to_backup_wordpress_blog_site_">Batch script to backup WordPress blog site</h4>
+
+<div class="_markdown-code-bt"><pre style="display:none"></pre><pre><code>REM _mybackupblog.bat
+
+@echo off
+setlocal
+
+set WP_SITE=&lt;your site i.e. mysite.wordpress.com&gt;
+set WP_BKP_DIR=&lt;your backup directory here&gt;
+set WGET_COMMON_OPTIONS=-nv --load-cookies %WP_BKP_DIR%\cookies.txt
+
+REM Backup entire site
+echo "Backing up WordPress blog site..."
+wget  %WGET_COMMON_OPTIONS% -m -p –E -k -D%WP_SITE% -P %WP_BKP_DIR%\site http://%WP_SITE%
+
+REM Export entire site
+echo "Exporting WordPress blog site..."
+wget %WGET_COMMON_OPTIONS% -x http://%WP_SITE%/wp-admin/export.php?download=true -O %WP_BKP_DIR%\wordpress.xml
+</code></pre></div>
+
+<h4 id="_batch_script_to_schedule_a_daily_weekdays_only_blog_backup_">Batch script to schedule a daily (weekdays only) blog backup</h4>
+
+<div class="_markdown-code-bt"><pre style="display:none"></pre><pre><code>REM _myschtasks.bat
+
+@echo off
+setlocal
+
+schtasks /delete /F /TN "MyBlogBackup"
+schtasks /create /RU %user% /RP %password% /SC WEEKLY /D MON,TUE,WED,THU,FRI /ST 13:40:00 /TN "MyBlogBackup" /tr "cmd.exe /c _mybackupblog.bat" /IT
+</code></pre></div>
+
+<p>Tags: <a href='tag_wordpress.html'>wordpress</a>, <a href='tag_backup.html'>backup</a></p>
+<!-- text end -->
+<!-- entry end -->
+</div>
+<div id="footer">CC by-nc-nd <a href="http://twitter.com/vsgadkari">Vinayak Gadkari</a> &mdash; <a href="mailto:vinayak&#46;gadkari&#64;gmail&#46;com">vinayak&#46;gadkari&#64;gmail&#46;com</a><br/>
+Generated with <a href="https://github.com/cfenollosa/bashblog">bashblog</a>, a single bash script to easily create blogs like this one</div>
+</div></div>
+</body></html>

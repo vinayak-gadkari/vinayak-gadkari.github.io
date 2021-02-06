@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="main.css" type="text/css" />
+<link rel="stylesheet" href="blog.css" type="text/css" />
+<link rel="alternate" type="application/rss+xml" title="Subscribe to this page..." href="feed.rss" />
+<title>Inspirational Quotes ON the desktop</title>
+</head><body>
+<div id="divbodyholder">
+<div class="headerholder"><div class="header">
+<div id="title">
+<h1 class="nomargin"><a class="ablack" href="https://vinayak-gadkari.github.io/index.html">Technoholic</a></h1>
+<div id="description">Programming and Productivity tips and tricks</div>
+</div></div></div>
+<div id="divbody"><div class="content">
+<!-- entry begin -->
+<h3><a class="ablack" href="inspirational-quotes-on-the-desktop.html">
+Inspirational Quotes ON the desktop
+</a></h3>
+<!-- bashblog_timestamp: #202102062206.05# -->
+<div class="subtitle">February 06, 2021 &mdash; 
+Vinayak Gadkari
+</div>
+<!-- text begin -->
+
+<p><img src="assets/quotes-title.jpeg" alt="quotes-title" /></p>
+
+<p>I try to keep my desktop clean so that I can display only the items that require my immediate attention. I also like to start my day with an inspirational quote. Since the desktop is the first thing one sees after booting up the system in the morning, here is a <a href="http://blogs.hbr.org/cs/2010/01/jugaad_a_new_growth_formula_fo.html">jugaad </a>that uses <a href="http://www.autohotkey.com/">Autohotkey</a> and <a href="http://technet.microsoft.com/en-us/sysinternals/bb897557">bginfo</a> to put a random quote on your desktop.</p>
+
+<p>I initially tried out <a href="http://www.howtogeek.com/howto/35980/how-to-display-a-quote-on-your-desktop-using-rainmeter/">Rainmeter</a> and <a href="http://lifehacker.com/213280/geek-to-live--incorporate-text-files-onto-your-desktop">Samurize</a>, but found them a bit too heavy for this simple application. Here is a way to do this without using any third part tools.</p>
+
+<hr />
+
+<h3 id="_desktop_">Desktop</h3>
+
+<p><img src="assets/quotes-desktop.png" alt="quotes-desktop" /></p>
+
+<h3 id="_steps_">Steps:</h3>
+
+<ol>
+<li>Create a quotes text file which has one quote per line (myquotes.txt). The first line indicates the no. of quotes in the file.</li>
+<li>Use bginfo to show this text file on your desktop. Save the settings (BGInfoSetup.bgi). bginfo handles multi-monitor configurations which is a huge plus for me.</li>
+<li>Use Autohotkey functions to display a random quote every time the function is called. This can be called periodically using Autohotkey timers or as required. I call the function every time I add a to-do to be displayed on the screen.</li>
+</ol>
+
+<h4 id="_1_quotes_file_">1) Quotes file</h4>
+
+<blockquote>
+<p>3
+Dwight Eisenhower – What counts is not necessarily the size of the dog in the fight; it’s the size of the fight in the dog.
+Peter Drucker – Management is doing things right; leadership is doing the right things.
+John Wooden – Don’t let what you cannot do interfere with what you can do.</p>
+</blockquote>
+
+<h4 id="_2_bginfo_setup_">2) BGInfo setup</h4>
+
+<p><img src="assets/quotes-with-bginfo.png" alt="quotes-with-bginfo" /></p>
+
+<h4 id="_3_autohotkey_functions_">3) Autohotkey functions</h4>
+
+<div class="_markdown-code-bt"><pre style="display:none"></pre><pre><code>; **************************************************
+; Quotes displayed on desktop
+; **************************************************
+BGDisplay()
+{
+  Run, bginfo.exe e:\Vinayak\bin\BGInfoSetup.bgi /timer:0,,Hide
+}
+
+NextQuote()
+{
+  QuotesFile = E:\Vinayak\bin\todo\myquotes.txt
+  FileReadLine, totallines, %QuotesFile%, 1
+  Random lineno, 2, %totallines%+1
+  FileReadLine, nextquote, %QuotesFile%, %lineno%
+  FileDelete, %QuotesFile%.show
+  FileAppend, %nextquote%, %QuotesFile%.show
+}
+</code></pre></div>
+
+<p>Tags: <a href='tag_productivity.html'>productivity</a>, <a href='tag_inspiration.html'>inspiration</a></p>
+<!-- text end -->
+<!-- entry end -->
+</div>
+<div id="footer">CC by-nc-nd <a href="http://twitter.com/vsgadkari">Vinayak Gadkari</a> &mdash; <a href="mailto:vinayak&#46;gadkari&#64;gmail&#46;com">vinayak&#46;gadkari&#64;gmail&#46;com</a><br/>
+Generated with <a href="https://github.com/cfenollosa/bashblog">bashblog</a>, a single bash script to easily create blogs like this one</div>
+</div></div>
+</body></html>

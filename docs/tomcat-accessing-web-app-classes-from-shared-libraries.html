@@ -1,0 +1,216 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="main.css" type="text/css" />
+<link rel="stylesheet" href="blog.css" type="text/css" />
+<link rel="alternate" type="application/rss+xml" title="Subscribe to this page..." href="feed.rss" />
+<title>Tomcat: Accessing web app classes from shared libraries</title>
+</head><body>
+<div id="divbodyholder">
+<div class="headerholder"><div class="header">
+<div id="title">
+<h1 class="nomargin"><a class="ablack" href="https://vinayak-gadkari.github.io/index.html">Technoholic</a></h1>
+<div id="description">Programming and Productivity tips and tricks</div>
+</div></div></div>
+<div id="divbody"><div class="content">
+<!-- entry begin -->
+<h3><a class="ablack" href="tomcat-accessing-web-app-classes-from-shared-libraries.html">
+Tomcat: Accessing web app classes from shared libraries
+</a></h3>
+<!-- bashblog_timestamp: #202102062153.02# -->
+<div class="subtitle">February 06, 2021 &mdash; 
+Vinayak Gadkari
+</div>
+<!-- text begin -->
+
+<p><img src="assets/tomcat-webserver.jpg" alt="tomcat-webserver" /></p>
+
+<p>It is not a recommended practise to have libraries placed in Tomcat’s lib directory to access classes in a web application. However, there are cases when you may want to flout this practise. Tomcat’s class loading mechanism will not allow you to do so since the web classes and the lib classes are loaded by different class loaders. The workaround in such a case is to use a custom bootstrap loader. This loader should be used to load all the application specific classes.</p>
+
+<hr />
+
+<p>An example of a custom bootstrap loader is given below. The custom class loader can load classes from path tokens separated with a semicolon (similar to the Java class path). The path tokens can specified in one of the following forms:</p>
+
+<ol>
+<li>Absolute path (c:\mytomcat\lib\myjar.jar)</li>
+<li>Absolute path ending with a wildcard (c:\mytomcat\lib*)</li>
+<li>Path using the ROOTDIR env or JVM property (%ROOTDIR%\lib\myjar.jar)</li>
+<li>Path using the ROOTDIR env or JVM property and ending with a wildcard (%ROOTDIR%\lib*)</li>
+</ol>
+
+<h3 id="_bootstraploader_java_">BootstrapLoader.java</h3>
+
+<div class="_markdown-code-bt"><pre style="display:none"></pre><pre><code>package test.tomcat;
+
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
+
+
+
+public class BootstrapLoader
+{
+    public BootstrapLoader(String path)
+    {
+        URL[] class_path = getClassPath(path);
+
+        setClassLoader(class_path);
+    }
+
+    private URL[] getClassPath(String path)
+    {
+        String real_path = Utility.replaceRootDir(path);
+        StringTokenizer token = new StringTokenizer(real_path, delim);
+        List&lt;URL&gt; class_path = new ArrayList&lt;URL&gt;();
+
+        while(token.hasMoreTokens())
+        {
+            String file_name = token.nextToken();
+
+            // Get all jars if file name ends with wild-card character
+            if (file_name.endsWith(wildcard_spec))
+            {
+                file_name = file_name.substring(0, file_name.length()
+                    - wildcard_spec.length());
+                class_path.addAll(Utility.classPathFromJars(file_name));
+            }
+            // Else append the file name as it is
+            else
+            {
+                URL url = Utility.getFileURL(file_name);
+                if (null != url)
+                {
+                    class_path.add(url);
+                }
+            }
+        }
+
+        return class_path.toArray(new URL[0]);
+    }
+
+    private void setClassLoader(URL[] class_path)
+    {
+        ClassLoader custom_cl = new URLClassLoader(class_path);
+        Thread.currentThread().setContextClassLoader(custom_cl);
+    }
+
+    public static void main(String[] args)
+    {
+        BootstrapLoader b = new BootstrapLoader("%ROOTDIR%;%ROOTDIR%\\$Realtime Framework_v5.3.02.319464_Uninstall$\\realtime\\tools\\winmon\\02-java\\src\\*");
+    }
+
+    private final static String delim = ";";
+    private final static String wildcard_spec = "/*";
+}
+</code></pre></div>
+
+<h3 id="_utility_java_">Utility.java</h3>
+
+<div class="_markdown-code-bt"><pre style="display:none"></pre><pre><code>package test.tomcat;
+
+import java.io.File;
+import java.io.FilenameFilter;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
+final public class Utility
+{
+    final private static String ROOT_ENV_VAR    = "ROOTDIR";
+
+    public static String getRootDir()
+    {
+        String root_dir = System.getProperty(ROOT_ENV_VAR);
+        if (null == root_dir)
+        {
+            root_dir = System.getenv(ROOT_ENV_VAR);
+        }
+
+        if (null != root_dir)
+        {
+            root_dir = root_dir.replaceAll("\\\\", "/");
+        }
+
+        return root_dir;
+    }
+
+    // Replace back slashes and env variable
+    public static String replaceRootDir(String str)
+    {
+        final String root_dir = getRootDir();
+        str = str.replaceAll("\\\\", "/");
+
+        if (null != root_dir)
+        {
+            str = str.replaceAll("(?i)%" + ROOT_ENV_VAR + "%", root_dir);
+        }
+
+        return str;
+    }
+
+    public static URL getFileURL(String file_path)
+    {
+        URL url = null;
+
+        try
+        {
+            File file = new File(file_path);
+            if( file.exists() )
+            {
+                url = file.toURI().toURL();
+            }
+        }
+        catch(MalformedURLException ex)
+        {
+            // Log the exception and continue
+            // ....
+        }
+
+        return url;
+    }
+
+    public static List&lt;URL&gt; classPathFromJars(String dir_name)
+    {
+        final File dir = new File(dir_name);
+        List&lt;URL&gt; class_path = new ArrayList&lt;URL&gt;();
+        final FilenameFilter filter = new FilenameFilter()
+        {
+            public boolean accept(File dir, String name)
+            {
+                return name.endsWith(".jar");
+            }
+        };
+
+        final String[] jar_names = dir.list(filter);
+        if (null != jar_names)
+        {
+            for (String jar_name : jar_names)
+            {
+                URL url = getFileURL(dir + File.separator + jar_name);
+                if (null != url)
+                {
+                    class_path.add(url);
+                }
+            }
+        }
+
+        return class_path;
+    }
+
+    private Utility()
+    {}
+}
+</code></pre></div>
+
+<p>Tags: <a href='tag_tomcat.html'>tomcat</a>, <a href='tag_java.html'>java</a></p>
+<!-- text end -->
+<!-- entry end -->
+</div>
+<div id="footer">CC by-nc-nd <a href="http://twitter.com/vsgadkari">Vinayak Gadkari</a> &mdash; <a href="mailto:vinayak&#46;gadkari&#64;gmail&#46;com">vinayak&#46;gadkari&#64;gmail&#46;com</a><br/>
+Generated with <a href="https://github.com/cfenollosa/bashblog">bashblog</a>, a single bash script to easily create blogs like this one</div>
+</div></div>
+</body></html>
