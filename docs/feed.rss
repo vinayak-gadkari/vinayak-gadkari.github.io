@@ -2,9 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
 <channel><title>Technoholic</title><link>https://vinayak-gadkari.github.io/index.html</link>
 <description>Programming and Productivity tips and tricks</description><language>en</language>
-<lastBuildDate>Sat, 06 Feb 2021 10:55:00 +0530</lastBuildDate>
-<pubDate>Sat, 06 Feb 2021 10:55:00 +0530</pubDate>
+<lastBuildDate>Sat, 06 Feb 2021 10:59:49 +0530</lastBuildDate>
+<pubDate>Sat, 06 Feb 2021 10:59:49 +0530</pubDate>
 <atom:link href="https://vinayak-gadkari.github.io/feed.rss" rel="self" type="application/rss+xml" />
+<item><title>
+Personal Kanban on the desktop
+</title><description><![CDATA[
+
+<p><a href="http://www.personalkanban.com/pk/personal-kanban-the-book/"><img src="https://i0.wp.com/neuf.ivillage.cc/pk/wordpress/wp-content/uploads/2010/08/book-cover-thumb.png" alt="Personal Kanban book" /></a></p>
+
+<p>I have been a GTD (<a href="http://www.amazon.com/Getting-Things-Done-Stress-Free-Productivity/dp/0142000280">Getting Things Done</a>) fan as well as an agile practitioner for years. GTD advocates creating hard deadlines so that your slate is always clean. I have been finding this tough to manage as the WIP (work in progress) has been slowly increasing each day. <a href="http://www.amazon.com/Personal-Kanban-Mapping-Work-Navigating/dp/1453802266">Personal Kanban</a> by Jim Benson and Tonianne DeMaria Barry provided a refreshing view.</p>
+
+<hr />
+]]></description><link>https://vinayak-gadkari.github.io/personal-kanban-on-the-desktop20403.html</link>
+<guid>https://vinayak-gadkari.github.io/./personal-kanban-on-the-desktop20403.html</guid>
+<dc:creator>Vinayak Gadkari</dc:creator>
+<pubDate>Sat, 06 Feb 2021 10:59:45 +0530</pubDate></item>
 <item><title>
 Naked Objects–Really Naked?
 </title><description><![CDATA[
@@ -69,15 +82,4 @@ Windows Command line Gems
 <guid>https://vinayak-gadkari.github.io/./windows-command-line-gems30995.html</guid>
 <dc:creator>Vinayak Gadkari</dc:creator>
 <pubDate>Sat, 06 Feb 2021 09:45:50 +0530</pubDate></item>
-<item><title>
-Personal Kanban on the desktop
-</title><description><![CDATA[
-
-<p>I have been a GTD (<a href="http://www.amazon.com/Getting-Things-Done-Stress-Free-Productivity/dp/0142000280">Getting Things Done</a>) fan as well as an agile practitioner for years. GTD advocates creating hard deadlines so that your slate is always clean. I have been finding this tough to manage as the WIP (work in progress) has been slowly increasing each day. <a href="http://www.amazon.com/Personal-Kanban-Mapping-Work-Navigating/dp/1453802266">Personal Kanban</a> by Jim Benson and Tonianne DeMaria Barry provided a refreshing view.</p>
-
-<hr />
-]]></description><link>https://vinayak-gadkari.github.io/personal-kanban-on-the-desktop15388.html</link>
-<guid>https://vinayak-gadkari.github.io/./personal-kanban-on-the-desktop15388.html</guid>
-<dc:creator>Vinayak Gadkari</dc:creator>
-<pubDate>Sat, 06 Feb 2021 08:27:28 +0530</pubDate></item>
 </channel></rss>
