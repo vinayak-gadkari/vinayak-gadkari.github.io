@@ -2,9 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
 <channel><title>Technoholic</title><link>https://vinayak-gadkari.github.io/index.html</link>
 <description>Programming and Productivity tips and tricks</description><language>en</language>
-<lastBuildDate>Sat, 06 Feb 2021 09:47:24 +0530</lastBuildDate>
-<pubDate>Sat, 06 Feb 2021 09:47:24 +0530</pubDate>
+<lastBuildDate>Sat, 06 Feb 2021 10:43:32 +0530</lastBuildDate>
+<pubDate>Sat, 06 Feb 2021 10:43:32 +0530</pubDate>
 <atom:link href="https://vinayak-gadkari.github.io/feed.rss" rel="self" type="application/rss+xml" />
+<item><title>
+Teams and Jira integration
+</title><description><![CDATA[
+
+<p><img src="assets\teams-jira-server-icon.png" alt="teams-jira-server-icon" /></p>
+
+<p>If you are on the lookout for accessing Jira issues in Teams without asking the Jira administrator to install additional apps, Jira Server for Teams can be an option. The Jira Server connector uses built-in Webhooks functionality of Jira Server that doesn’t require third party Jira app installation. You still require the administrator for Webhook installation and also  configure firewall to allow outgoing traffic from Jira Server instance to Teams Connector app i.e. specifically need to add the address record of ‘connectors.msteams-atlassian.com’ to any sort of whitelist that controls network egress traffic..</p>
+
+<p><a href="https://techcommunity.microsoft.com/t5/microsoft-teams-blog/new-jira-server-integration-for-microsoft-teams/ba-p/327688">Microsft Teams Jira Server Connector</a></p>
+
+<hr />
+]]></description><link>https://vinayak-gadkari.github.io/teams-and-jira-integration14639.html</link>
+<guid>https://vinayak-gadkari.github.io/./teams-and-jira-integration14639.html</guid>
+<dc:creator>Vinayak Gadkari</dc:creator>
+<pubDate>Sat, 06 Feb 2021 10:43:28 +0530</pubDate></item>
 <item><title>
 Windows Command line Gems
 </title><description><![CDATA[
@@ -31,21 +46,6 @@ Windows Command line Gems
 <guid>https://vinayak-gadkari.github.io/./windows-command-line-gems30995.html</guid>
 <dc:creator>Vinayak Gadkari</dc:creator>
 <pubDate>Sat, 06 Feb 2021 09:45:50 +0530</pubDate></item>
-<item><title>
-Teams and Jira integration
-</title><description><![CDATA[
-
-<p>If you are on the lookout for accessing Jira issues in Teams without asking the Jira administrator to install additional apps, Jira Server for Teams can be an option. The Jira Server connector uses built-in Webhooks functionality of Jira Server that doesn’t require third party Jira app installation. You still require the administrator for Webhook installation and also  configure firewall to allow outgoing traffic from Jira Server instance to Teams Connector app i.e. specifically need to add the address record of ‘connectors.msteams-atlassian.com’ to any sort of whitelist that controls network egress traffic..</p>
-
-<p><a href="https://techcommunity.microsoft.com/t5/microsoft-teams-blog/new-jira-server-integration-for-microsoft-teams/ba-p/327688">Microsft Teams Jira Server Connector</a></p>
-
-<h2 id="_setup_">Setup</h2>
-
-<hr />
-]]></description><link>https://vinayak-gadkari.github.io/teams-and-jira-integration8056.html</link>
-<guid>https://vinayak-gadkari.github.io/./teams-and-jira-integration8056.html</guid>
-<dc:creator>Vinayak Gadkari</dc:creator>
-<pubDate>Sat, 06 Feb 2021 08:27:43 +0530</pubDate></item>
 <item><title>
 Personal Kanban on the desktop
 </title><description><![CDATA[
