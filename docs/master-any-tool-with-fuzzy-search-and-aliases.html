@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="main.css" type="text/css" />
+<link rel="stylesheet" href="blog.css" type="text/css" />
+<link rel="alternate" type="application/rss+xml" title="Subscribe to this page..." href="feed.rss" />
+<title>Master any tool with fuzzy search and aliases</title>
+</head><body>
+<div id="divbodyholder">
+<div class="headerholder"><div class="header">
+<div id="title">
+<h1 class="nomargin"><a class="ablack" href="https://vinayak-gadkari.github.io/index.html">Technoholic</a></h1>
+<div id="description">Programming and Productivity tips and tricks</div>
+</div></div></div>
+<div id="divbody"><div class="content">
+<!-- entry begin -->
+<h3><a class="ablack" href="master-any-tool-with-fuzzy-search-and-aliases.html">
+Master any tool with fuzzy search and aliases
+</a></h3>
+<!-- bashblog_timestamp: #202102071238.47# -->
+<div class="subtitle">February 07, 2021 &mdash; 
+Vinayak Gadkari
+</div>
+<!-- text begin -->
+
+<p><img src="assets/tool-icon.jpg" alt="tool-icon" /></p>
+
+<p>Mastering any tool requires learning what that tool does and how we can effectively use it. For example, we know that a simple mechanical tool like a hammer hammers in nails, has to be struck over a nail held in an upright manner until the nail goes in properly. On the other hand, software tools offer a huge variety of commands and options for each command and it becomes difficult to store all those command and options in your brain. </p>
+
+<p>Aliases offer a second brain way to store all those commands in   config files and also rename commands with intuitive names. Not all tools offer aliases though. Secondly aliases tend to grow over time and remembering those aliases itself becomes a big hassle. Enter fuzzy search. With these two techniques one can virtually master any tool, let me show you how…</p>
+
+<hr />
+
+<h2 id="_using_aliases_">Using aliases</h2>
+
+<p>git aliases are a prime example of using aliases for simplifying complex commands.</p>
+
+<div class="_markdown-code-bt"><pre style="display:none"></pre><pre><code>[alias]
+        branchSwitch = "!f() { git checkout-branch $1; git pull origin $1; }; f"
+        commitLast = "log -1 HEAD --stat"
+</code></pre></div>
+
+<p>I like to switch branches with a more intuitive switch command. This alias also demonstrates how a git aliases can accept parameters. The second alias for getting the last commit is a life saver since I do not have to remember the details of the log command to extract the last commit. The two aliases also demonstrate a principle I  follow while naming aliases for consistency i.e. Name aliases as (RESOURCE)(OPERATION)(OPTIONS). e.g: Kubernetes also follows similar conventions for most of their CLI operations i.e kubectl (operation) (resource) (options).</p>
+
+<h3 id="_what_if_the_tool_does_not_offer_aliases_">What if the tool does not offer aliases?</h3>
+
+<p>Create a config file in an INI format (key=value) format and parse it via a shell or batch script. In the example below,  our configuration file for aliases is stored under XDG_CONFIG_HOME, a useful convention for consistent handling of configuration files. More on that later..</p>
+
+<p><strong>Configuration file</strong> (%XDG_CONFIG_HOME%\mytool\config)</p>
+
+<div class="_markdown-code-bt"><pre style="display:none"></pre><pre><code>branchSwitch = git checkout-branch
+commitLast = log -1 HEAD --stat
+</code></pre></div>
+
+<p>The caveat to remember is to use an alternate delimiter instead of = if the commands that you alias also contain =. </p>
+
+<p><strong>Handler script</strong></p>
+
+<p>The handler script greps the aliases to find out the command to execute.</p>
+
+<div class="_markdown-code-bt"><pre style="display:none"></pre><pre><code>@echo on
+setlocal enabledelayedexpansion
+
+set MYTOOL_CONFIG_FILE=%XDG_CONFIG_HOME%\mytool\config
+set ALIAS=%1
+
+@REM Alias cannot be empty.
+if "!ALIAS!"=="" (
+  echo ERROR: alias cannot be empty.
+  echo Usage: %~nx0 [alias]
+  exit /b 1
+)
+
+for /f "delims== tokens=1*" %%i in ('type !MYTOOL_CONFIG_FILE! ^| grep -i !ALIAS!') do set COMMAND=%%j
+
+if "!COMMAND!"=="" (
+  echo ERROR: !ALIAS! not found in configuration.
+  exit /b 1
+)
+
+@REM Do something with the command
+</code></pre></div>
+
+<p>There are a few issues here. grep is an exact match search tool. Hence if I type cmtLast instead of commitLast it will not match against my expected alias. An alternative is to use regular expressions - even that is not a convenient option. Enter a fuzzy search tool.</p>
+
+<h2 id="_using_a_fuzzy_search_tool_to_select_alias_">Using a fuzzy search tool to select alias</h2>
+
+<p>Using a fuzzy search tool like fzf or peco or others can solve our problem. In the script below, we have replaced grep with fzf, my favourite fuzzy search tool.</p>
+
+<div class="_markdown-code-bt"><pre style="display:none"></pre><pre><code>@echo off
+setlocal enabledelayedexpansion
+
+set MYTOOL_CONFIG_FILE=%XDG_CONFIG_HOME%\mytool\config
+
+for /f "delims== tokens=1*" %%i in ('type !MYTOOL_CONFIG_FILE! ^| fzf') do set COMMAND=%%j
+
+if "!COMMAND!"=="" (
+  echo No alias was selected.
+  goto :eof
+)
+
+@REM Do something with the command
+echo Executing command !COMMAND!
+</code></pre></div>
+
+<p>Let us see this script in action. We can select an individual alias using arrow keys or by typing in letters that are a fuzzy match. In the screencast below, I type cmtlast which fuzzily matches the commitLast alias. Job done. </p>
+
+<p><img src="assets/fuzzy-search-and-aliases.gif" alt="fuzzy-search-and-aliases" /></p>
+
+<p>Git has been used as an example above. However, using this combination of aliases and fuzzy search it is easy to learn any tool that has complex commands.</p>
+
+<h2 id="_resources_">Resources</h2>
+
+<ul>
+<li><a href="https://github.com/junegunn/fzf">junegunn/fzf: A command-line fuzzy finder - GitHub</a></li>
+<li><a href="https://awesomeopensource.com/projects/fzf">The Top 47 Fzf Open Source Projects</a></li>
+</ul>
+
+<p>Tags: 
+<!-- text end -->
+<!-- entry end -->
+</div>
+<div id="footer">CC by-nc-nd <a href="http://twitter.com/vsgadkari">Vinayak Gadkari</a> &mdash; <a href="mailto:vinayak&#46;gadkari&#64;gmail&#46;com">vinayak&#46;gadkari&#64;gmail&#46;com</a><br/>
+Generated with <a href="https://github.com/cfenollosa/bashblog">bashblog</a>, a single bash script to easily create blogs like this one</div>
+</div></div>
+</body></html>

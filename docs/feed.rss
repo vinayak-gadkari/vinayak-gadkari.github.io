@@ -2,9 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
 <channel><title>Technoholic</title><link>https://vinayak-gadkari.github.io/index.html</link>
 <description>Programming and Productivity tips and tricks</description><language>en</language>
-<lastBuildDate>Sat, 06 Feb 2021 22:41:53 +0530</lastBuildDate>
-<pubDate>Sat, 06 Feb 2021 22:41:53 +0530</pubDate>
+<lastBuildDate>Sun, 07 Feb 2021 12:38:52 +0530</lastBuildDate>
+<pubDate>Sun, 07 Feb 2021 12:38:52 +0530</pubDate>
 <atom:link href="https://vinayak-gadkari.github.io/feed.rss" rel="self" type="application/rss+xml" />
+<item><title>
+Master any tool with fuzzy search and aliases
+</title><description><![CDATA[
+
+<p><img src="assets/tool-icon.jpg" alt="tool-icon" /></p>
+
+<p>Mastering any tool requires learning what that tool does and how we can effectively use it. For example, we know that a simple mechanical tool like a hammer hammers in nails, has to be struck over a nail held in an upright manner until the nail goes in properly. On the other hand, software tools offer a huge variety of commands and options for each command and it becomes difficult to store all those command and options in your brain. </p>
+
+<p>Aliases offer a second brain way to store all those commands in   config files and also rename commands with intuitive names. Not all tools offer aliases though. Secondly aliases tend to grow over time and remembering those aliases itself becomes a big hassle. Enter fuzzy search. With these two techniques one can virtually master any tool, let me show you how…</p>
+
+<hr />
+]]></description><link>https://vinayak-gadkari.github.io/master-any-tool-with-fuzzy-search-and-aliases.html</link>
+<guid>https://vinayak-gadkari.github.io/./master-any-tool-with-fuzzy-search-and-aliases.html</guid>
+<dc:creator>Vinayak Gadkari</dc:creator>
+<pubDate>Sun, 07 Feb 2021 12:38:47 +0530</pubDate></item>
 <item><title>
 Proof reading and spell checking
 </title><description><![CDATA[
@@ -139,19 +154,4 @@ Naked Objects–Really Naked?
 <guid>https://vinayak-gadkari.github.io/./naked-objects-really-naked.html</guid>
 <dc:creator>Vinayak Gadkari</dc:creator>
 <pubDate>Sat, 06 Feb 2021 10:54:55 +0530</pubDate></item>
-<item><title>
-Teams and Jira integration
-</title><description><![CDATA[
-
-<p><img src="assets\teams-jira-server-icon.png" alt="teams-jira-server-icon" /></p>
-
-<p>If you are on the lookout for accessing Jira issues in Teams without asking the Jira administrator to install additional apps, Jira Server for Teams can be an option. The Jira Server connector uses built-in Webhooks functionality of Jira Server that doesn’t require third party Jira app installation. You still require the administrator for Webhook installation and also  configure firewall to allow outgoing traffic from Jira Server instance to Teams Connector app i.e. specifically need to add the address record of ‘connectors.msteams-atlassian.com’ to any sort of whitelist that controls network egress traffic..</p>
-
-<p><a href="https://techcommunity.microsoft.com/t5/microsoft-teams-blog/new-jira-server-integration-for-microsoft-teams/ba-p/327688">Microsft Teams Jira Server Connector</a></p>
-
-<hr />
-]]></description><link>https://vinayak-gadkari.github.io/teams-and-jira-integration14639.html</link>
-<guid>https://vinayak-gadkari.github.io/./teams-and-jira-integration14639.html</guid>
-<dc:creator>Vinayak Gadkari</dc:creator>
-<pubDate>Sat, 06 Feb 2021 10:43:28 +0530</pubDate></item>
 </channel></rss>
