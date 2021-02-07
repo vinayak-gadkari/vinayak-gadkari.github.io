@@ -2,9 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
 <channel><title>Technoholic</title><link>https://vinayak-gadkari.github.io/index.html</link>
 <description>Programming and Productivity tips and tricks</description><language>en</language>
-<lastBuildDate>Sun, 07 Feb 2021 12:48:59 +0530</lastBuildDate>
-<pubDate>Sun, 07 Feb 2021 12:48:59 +0530</pubDate>
+<lastBuildDate>Sun, 07 Feb 2021 17:34:01 +0530</lastBuildDate>
+<pubDate>Sun, 07 Feb 2021 17:34:01 +0530</pubDate>
 <atom:link href="https://vinayak-gadkari.github.io/feed.rss" rel="self" type="application/rss+xml" />
+<item><title>
+Using TMUX Terminal Multiplexer
+</title><description><![CDATA[
+
+<p><img src="assets/tmux-book.png" alt="tmux-book" /></p>
+
+<p>In the early days working as a  junior developer working on Hughes satellite dish tv networks, I had to use multiple machines, one for looking at streaming movies and another for looking at the device logs at the same time. It was very clear to me since then  using multiple windows, machines, screens without the need to switch was a major productivity booster. Now, as part of my Dev-ops related work, I  need to work with multiple servers and was looking at optimizing my workflow for consoles using SSH. Enter TMUX - short name for terminal multiplexer.</p>
+
+<hr />
+]]></description><link>https://vinayak-gadkari.github.io/using-tmux-terminal-multiplexer.html</link>
+<guid>https://vinayak-gadkari.github.io/./using-tmux-terminal-multiplexer.html</guid>
+<dc:creator>Vinayak Gadkari</dc:creator>
+<pubDate>Sun, 07 Feb 2021 17:33:53 +0530</pubDate></item>
 <item><title>
 Master any tool with fuzzy search and aliases
 </title><description><![CDATA[
@@ -131,27 +144,4 @@ Personal Kanban on the desktop
 <guid>https://vinayak-gadkari.github.io/./personal-kanban-on-the-desktop20403.html</guid>
 <dc:creator>Vinayak Gadkari</dc:creator>
 <pubDate>Sat, 06 Feb 2021 10:59:45 +0530</pubDate></item>
-<item><title>
-Naked Objects–Really Naked?
-</title><description><![CDATA[
-
-<p><img src="assets\naked-objects-icon.jpg" alt="naked-objects-icon" /></p>
-
-<p>Naked Objects is an eye catching name. No wonder that it has been demonstrated at the OOPSLA 2001 conference under the banner of Intriguing Technologies.</p>
-
-<p>Copyright (c) 2002 nakedobjects.org</p>
-
-<h2 id="_the_naked_objects_pattern_">The Naked Objects Pattern</h2>
-
-<ul>
-<li>Design behaviourally complete domain objects i.e.- Encapsulate all the behaviour/functionality within the domain objects.</li>
-<li>Single point definition: All the representations of a domain object such as user-interface, database-mapping, should be derived automatically from the domain object class itself.</li>
-<li>Object-oriented user-interface (OOUI): By exposing behaviourally-complete objects, users can view and interact with underlying domain</li>
-</ul>
-
-<hr />
-]]></description><link>https://vinayak-gadkari.github.io/naked-objects-really-naked.html</link>
-<guid>https://vinayak-gadkari.github.io/./naked-objects-really-naked.html</guid>
-<dc:creator>Vinayak Gadkari</dc:creator>
-<pubDate>Sat, 06 Feb 2021 10:54:55 +0530</pubDate></item>
 </channel></rss>
