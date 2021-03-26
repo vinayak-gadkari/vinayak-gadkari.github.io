@@ -1,0 +1,236 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="main.css" type="text/css" />
+<link rel="stylesheet" href="blog.css" type="text/css" />
+<link rel="alternate" type="application/rss+xml" title="Subscribe to this page..." href="feed.rss" />
+<title>Optimize Visual Studio Code</title>
+</head><body>
+<div id="divbodyholder">
+<div class="headerholder"><div class="header">
+<div id="title">
+<h1 class="nomargin"><a class="ablack" href="https://vinayak-gadkari.github.io/index.html">Technoholic</a></h1>
+<div id="description">Programming and Productivity tips and tricks</div>
+</div></div></div>
+<div id="divbody"><div class="content">
+<!-- entry begin -->
+<h3><a class="ablack" href="optimize-visual-studio-code.html">
+Optimize Visual Studio Code
+</a></h3>
+<!-- bashblog_timestamp: #202103261106.11# -->
+<div class="subtitle">March 26, 2021 &mdash; 
+Vinayak Gadkari
+</div>
+<!-- text begin -->
+
+<p><img src="assets\computer-monitor-with-code.jpg" alt="text" /></p>
+
+<p>Optimizing Visual Studio code involves periodic cleanup, removing extensions not needed, running whatever is needed and other tips. This should dramatically improve Code startup and editing performance. Read on...</p>
+
+<hr />
+
+<h2 id="_what_to_look_for_when_selecting_an_extension_">What to look for when selecting an extension</h2>
+
+<ol>
+<li>Is the feature available in VS Code already?
+VS Code updates may have the features provided in some extensions.</li>
+<li>Does the extension have the features I need?
+The extension should have the right amount of features I need (not too may or too less).</li>
+<li>Is the extension loaded as required and time it takes to load?
+Refer Activation Events and times in Extension Stats under "Developer: Startup Performance"</li>
+<li>Are resources optimized?
+Analyze the extension to check package, scripts etc.. You can google for the same if unfamiliar with extension analysis.</li>
+<li>Were any performance issues resolved for this extension recently?</li>
+<li>Is it actively maintained?</li>
+</ol>
+
+<h2 id="_activation_events_">Activation events</h2>
+
+<p><img src="assets\vscode-activation-events.png" alt="Activation Events" /></p>
+
+<h2 id="_how_to_audit_performance_">How to audit performance</h2>
+
+<ul>
+<li><p>Start Code as follows and run <strong>Developer: Show Running Extensions</strong> command to get the basic stats about the running extensions. Unresponsive extensions can be straightaway disabled if not required. It sorts the extensions from longest to shortest activation time. The time is titled "Startup Activation" if the extension is loaded on startup. You should run this multiple times to reduce the effect of cold and warm startup times.</p>
+
+<p><code>shell
+code --inspect-extensions=9993
+</code></p>
+
+<p><img src="assets\vscode-running-extensions.png" alt="Running Extensions" /></p></li>
+<li><p>Run <strong>Developer: Startup Performance</strong> command - this shows topics like system info, performance marks, extension activation stats, loader stats for modules, and more. The results are specific to the current project and any open files when you execute the command.</p>
+
+<p>```markdown</p>
+
+<h1 id="_system_info_">System Info</h1>
+
+<ul>
+<li>Code: 1.52.1 (ea3859d4ba2f3e577a159bc91e3074c5d85c0523)</li>
+<li>OS: win32(10.0.18363)</li>
+<li>CPUs: Intel(R) Core(TM) i7-9850H CPU @ 2.60GHz(12 x 2592)</li>
+<li>Memory(System): 15.79 GB(6.64GB free)</li>
+<li>Memory(Process): 179.01 MB working set(165.15MB private, 0.36MB shared)</li>
+<li>VM(likelyhood): 0%</li>
+<li>Initial Startup: true</li>
+<li>Has 0 other windows</li>
+<li>Screen Reader Active: false</li>
+<li>Empty Workspace: false
+```</li>
+</ul>
+
+<p><strong>Extension Activation Stats</strong> section details the performance of the extensions. A god idea is to focus on extensions with the longest times and disable as needed e.g: foam extension takes long in the example below.</p>
+
+<p>```markdown</p>
+
+<h1 id="_extension_activation_stats_">Extension Activation Stats</h1>
+
+<table border="1" cellspacing="0" cellpadding="2" class="_markdown-table">
+  <tr class="_markdown-row-hdr"><th>Extension</th><th>Eager</th><th>Load Code</th><th>Call Activate</th><th>Finish Activate</th><th>Event</th><th>By</th></tr>
+  <tr class="_markdown-row-odd"><td>vscode.debug-auto-launch</td><td>true</td><td>4</td><td>0</td><td>173</td><td>*</td><td>vscode.debug-auto-launch</td></tr>
+  <tr class="_markdown-row-even"><td>EditorConfig.EditorConfig</td><td>true</td><td>35</td><td>1</td><td>105</td><td>*</td><td>EditorConfig.EditorConfig</td></tr>
+  <tr class="_markdown-row-odd"><td>Equinusocio.vsc-material-theme</td><td>true</td><td>17</td><td>1</td><td>2950</td><td>*</td><td>Equinusocio.vsc-material-theme</td></tr>
+  <tr class="_markdown-row-even"><td>equinusocio.vsc-material-theme-icons</td><td>true</td><td>20</td><td>5</td><td>99</td><td>*</td><td>equinusocio.vsc-material-theme-icons</td></tr>
+  <tr class="_markdown-row-odd"><td>foam.foam-vscode</td><td>true</td><td>524</td><td>10</td><td>11652</td><td>workspaceContains:.vscode/foam.json</td><td>foam.foam-vscode</td></tr>
+  <tr class="_markdown-row-even"><td>formulahendry.auto-rename-tag</td><td>true</td><td>39</td><td>7</td><td>1072</td><td>*</td><td>formulahendry.auto-rename-tag</td></tr>
+  <tr class="_markdown-row-odd"><td>geddski.macros</td><td>true</td><td>102</td><td>1</td><td>91</td><td>*</td><td>geddski.macros</td></tr>
+  <tr class="_markdown-row-even"><td>HookyQR.beautify</td><td>true</td><td>83</td><td>0</td><td>91</td><td>*</td><td>HookyQR.beautify</td></tr>
+  <tr class="_markdown-row-odd"><td>hoovercj.vscode-power-mode</td><td>true</td><td>20</td><td>0</td><td>91</td><td>*</td><td>hoovercj.vscode-power-mode</td></tr>
+</table>
+
+<p>```</p></li>
+</ul>
+
+<h2 id="_general_performance_tips_">General Performance Tips</h2>
+
+<ol>
+<li>Upgrade to a 64-bit OS</li>
+<li>Startup settings - disable all
+<ul>
+<li>Workbench › Editor: Restore View State</li>
+<li>Files: Restore Undo Stack</li>
+<li>Workbench: Startup Editor</li>
+</ul>
+</li>
+<li>Editing performance - disable all
+<ul>
+<li>Minimap</li>
+<li>Word wrap</li>
+<li>CodeLens</li>
+<li>Format on Save</li>
+<li>Format on Paste</li>
+</ul>
+</li>
+<li><p>Other performance</p>
+
+<ul>
+<li>Telemetry: Enable Telemetry
+Does not improve performance but for security purposes.</li>
+<li><p>Search: Exclude</p>
+
+<p><code>json
+"search.exclude": {
+"**/node_modules": true,
+"**/bower_components": true,
+"**/temp": true,
+"**/env": true,
+"**/venv": true
+},
+</code></p></li>
+<li><p>Files: Watcher Exclude</p>
+
+<p><code>json
+"files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/**": true,
+    "**/env/**": true,
+    "**/venv/**": true,
+    "env-*": true
+},
+</code></p></li>
+<li><p>Files: Exclude</p>
+
+<p><code>json
+"files.exclude": {
+    "**/.archive": true,
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/temp/**": true,
+    "**/.classpath": true,
+    "**/.project": true,
+    "**/.settings": true,
+    "**/.factorypath": true,
+    "**/.DS_Store": true,
+    "**/.vscode": true,
+    "**/__pycache__": true,
+    "**/.pytest_cache": true,
+    "**/node_modules": true,
+    "venv": true,
+    "*.sublime-*": true,
+    "env*": true
+},
+</code></p></li>
+</ul>
+<span style="display:none">&#160;</span></li>
+<li><p>Disable extensions for a workspace or via command line</p>
+
+<p><code>shell
+code --disable-extensions
+</code></p></li>
+<li><p>Create extension sets e.g (Java, Python etc..) and load them as required.</p>
+
+<p><code>shell
+code --extensions-dir &lt;dir&gt;
+</code></p></li>
+<li><p>Clean cache periodically
+i.e. Folders under C:\Users\&lt;username>\AppData\Roaming\Code\</p>
+
+<ul>
+<li>Cache</li>
+<li>CachedDate</li>
+<li>CachedExtensions</li>
+<li>Code Cache</li>
+</ul>
+<span style="display:none">&#160;</span></li>
+</ol>
+
+<h2 id="_troubleshooting_performance_issues_">Troubleshooting performance issues</h2>
+
+<ol>
+<li><p>Experiencing slowness or a blank screen</p>
+
+<p><code>shell
+code --disable-gpu
+</code></p>
+
+<ul>
+<li>To set this permanently:
+<ul>
+<li>Run the <strong>Preferences: Configure Runtime Arguments</strong> command.</li>
+<li>Add <code>"disable-hardware-acceleration": true</code> in the opened argv.json.</li>
+<li>Restart VS Code.</li>
+</ul>
+</li>
+</ul>
+<span style="display:none">&#160;</span></li>
+<li><p>Installation appears to be corrupt with Unsupported message
+Reinstall VS Code.</p></li>
+</ol>
+
+<h2 id="_more_stuff_">More Stuff</h2>
+
+<ul>
+<li><a href="https://github.com/Microsoft/vscode/wiki/Performance-Issues">Performance Issues · microsoft/vscode Wiki</a></li>
+</ul>
+
+<p>Tags: <a href='tag_productivity.html'>productivity</a>, <a href='tag_code.html'>code</a>, <a href='tag_vscode.html'>vscode</a></p>
+<!-- text end -->
+<!-- entry end -->
+</div>
+<div id="footer">CC by-nc-nd <a href="http://twitter.com/vsgadkari">Vinayak Gadkari</a> &mdash; <a href="mailto:vinayak&#46;gadkari&#64;gmail&#46;com">vinayak&#46;gadkari&#64;gmail&#46;com</a><br/>
+Generated with <a href="https://github.com/cfenollosa/bashblog">bashblog</a>, a single bash script to easily create blogs like this one</div>
+</div></div>
+</body></html>
