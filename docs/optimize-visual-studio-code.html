@@ -18,214 +18,121 @@
 <h3><a class="ablack" href="optimize-visual-studio-code.html">
 Optimize Visual Studio Code
 </a></h3>
-<!-- bashblog_timestamp: #202103261106.11# -->
-<div class="subtitle">March 26, 2021 &mdash; 
+<!-- bashblog_timestamp: #202103271133.46# -->
+<div class="subtitle">March 27, 2021 &mdash; 
 Vinayak Gadkari
 </div>
 <!-- text begin -->
-
-<p><img src="assets\computer-monitor-with-code.jpg" alt="text" /></p>
-
-<p>Optimizing Visual Studio code involves periodic cleanup, removing extensions not needed, running whatever is needed and other tips. This should dramatically improve Code startup and editing performance. Read on...</p>
-
+<p><img src="assets\computer-monitor-with-code.jpg" alt="computer-monitor-with-code" /> </p>
+<p>Optimizing Visual Studio code involves periodic cleanup, removing extensions not needed, running whatever is needed and other tips. This should dramatically improve Code startup and editing performance. Read on…</p>
 <hr />
-
-<h2 id="_what_to_look_for_when_selecting_an_extension_">What to look for when selecting an extension</h2>
-
-<ol>
-<li>Is the feature available in VS Code already?
-VS Code updates may have the features provided in some extensions.</li>
-<li>Does the extension have the features I need?
-The extension should have the right amount of features I need (not too may or too less).</li>
-<li>Is the extension loaded as required and time it takes to load?
-Refer Activation Events and times in Extension Stats under "Developer: Startup Performance"</li>
-<li>Are resources optimized?
-Analyze the extension to check package, scripts etc.. You can google for the same if unfamiliar with extension analysis.</li>
+<h2 id="what-to-look-for-when-selecting-an-extension">What to look for when selecting an extension</h2>
+<ol type="1">
+<li>Is the feature available in VS Code already? VS Code updates may have the features provided in some extensions.</li>
+<li>Does the extension have the features I need? The extension should have the right amount of features I need (not too may or too less).</li>
+<li>Is the extension loaded as required and time it takes to load? Refer Activation Events and times in Extension Stats under “Developer: Startup Performance”</li>
+<li>Are resources optimized? Analyze the extension to check package, scripts etc.. You can google for the same if unfamiliar with extension analysis.</li>
 <li>Were any performance issues resolved for this extension recently?</li>
 <li>Is it actively maintained?</li>
 </ol>
-
-<h2 id="_activation_events_">Activation events</h2>
-
-<p><img src="assets\vscode-activation-events.png" alt="Activation Events" /></p>
-
-<h2 id="_how_to_audit_performance_">How to audit performance</h2>
-
+<h2 id="activation-events">Activation events</h2>
+<p><img src="assets\vscode-activation-events.png" alt="Activation Events" /> </p>
+<h2 id="how-to-audit-performance">How to audit performance</h2>
 <ul>
-<li><p>Start Code as follows and run <strong>Developer: Show Running Extensions</strong> command to get the basic stats about the running extensions. Unresponsive extensions can be straightaway disabled if not required. It sorts the extensions from longest to shortest activation time. The time is titled "Startup Activation" if the extension is loaded on startup. You should run this multiple times to reduce the effect of cold and warm startup times.</p>
-
-<p><code>shell
-code --inspect-extensions=9993
-</code></p>
-
-<p><img src="assets\vscode-running-extensions.png" alt="Running Extensions" /></p></li>
+<li><p>Start Code as follows and run <strong>Developer: Show Running Extensions</strong> command to get the basic stats about the running extensions. Unresponsive extensions can be straightaway disabled if not required. It sorts the extensions from longest to shortest activation time. The time is titled “Startup Activation” if the extension is loaded on startup. You should run this multiple times to reduce the effect of cold and warm startup times.</p>
+<pre class="shell"><code>code --inspect-extensions=9993</code></pre>
+<p><img src="assets\vscode-running-extensions.png" alt="Running Extensions" /> </p></li>
 <li><p>Run <strong>Developer: Startup Performance</strong> command - this shows topics like system info, performance marks, extension activation stats, loader stats for modules, and more. The results are specific to the current project and any open files when you execute the command.</p>
-
-<p>```markdown</p>
-
-<h1 id="_system_info_">System Info</h1>
-
-<ul>
-<li>Code: 1.52.1 (ea3859d4ba2f3e577a159bc91e3074c5d85c0523)</li>
-<li>OS: win32(10.0.18363)</li>
-<li>CPUs: Intel(R) Core(TM) i7-9850H CPU @ 2.60GHz(12 x 2592)</li>
-<li>Memory(System): 15.79 GB(6.64GB free)</li>
-<li>Memory(Process): 179.01 MB working set(165.15MB private, 0.36MB shared)</li>
-<li>VM(likelyhood): 0%</li>
-<li>Initial Startup: true</li>
-<li>Has 0 other windows</li>
-<li>Screen Reader Active: false</li>
-<li>Empty Workspace: false
-```</li>
-</ul>
-
+<p><img src="assets\vscode-perfstats-systeminfo.png" alt="Perf Stats System Info" /> </p>
 <p><strong>Extension Activation Stats</strong> section details the performance of the extensions. A god idea is to focus on extensions with the longest times and disable as needed e.g: foam extension takes long in the example below.</p>
-
-<p>```markdown</p>
-
-<h1 id="_extension_activation_stats_">Extension Activation Stats</h1>
-
-<table border="1" cellspacing="0" cellpadding="2" class="_markdown-table">
-  <tr class="_markdown-row-hdr"><th>Extension</th><th>Eager</th><th>Load Code</th><th>Call Activate</th><th>Finish Activate</th><th>Event</th><th>By</th></tr>
-  <tr class="_markdown-row-odd"><td>vscode.debug-auto-launch</td><td>true</td><td>4</td><td>0</td><td>173</td><td>*</td><td>vscode.debug-auto-launch</td></tr>
-  <tr class="_markdown-row-even"><td>EditorConfig.EditorConfig</td><td>true</td><td>35</td><td>1</td><td>105</td><td>*</td><td>EditorConfig.EditorConfig</td></tr>
-  <tr class="_markdown-row-odd"><td>Equinusocio.vsc-material-theme</td><td>true</td><td>17</td><td>1</td><td>2950</td><td>*</td><td>Equinusocio.vsc-material-theme</td></tr>
-  <tr class="_markdown-row-even"><td>equinusocio.vsc-material-theme-icons</td><td>true</td><td>20</td><td>5</td><td>99</td><td>*</td><td>equinusocio.vsc-material-theme-icons</td></tr>
-  <tr class="_markdown-row-odd"><td>foam.foam-vscode</td><td>true</td><td>524</td><td>10</td><td>11652</td><td>workspaceContains:.vscode/foam.json</td><td>foam.foam-vscode</td></tr>
-  <tr class="_markdown-row-even"><td>formulahendry.auto-rename-tag</td><td>true</td><td>39</td><td>7</td><td>1072</td><td>*</td><td>formulahendry.auto-rename-tag</td></tr>
-  <tr class="_markdown-row-odd"><td>geddski.macros</td><td>true</td><td>102</td><td>1</td><td>91</td><td>*</td><td>geddski.macros</td></tr>
-  <tr class="_markdown-row-even"><td>HookyQR.beautify</td><td>true</td><td>83</td><td>0</td><td>91</td><td>*</td><td>HookyQR.beautify</td></tr>
-  <tr class="_markdown-row-odd"><td>hoovercj.vscode-power-mode</td><td>true</td><td>20</td><td>0</td><td>91</td><td>*</td><td>hoovercj.vscode-power-mode</td></tr>
-</table>
-
-<p>```</p></li>
+<p><img src="assets\vscode-perfstats-extactivationstats.png" alt="Perf Stats Extension Activation Stats" /> </p></li>
 </ul>
-
-<h2 id="_general_performance_tips_">General Performance Tips</h2>
-
-<ol>
-<li>Upgrade to a 64-bit OS</li>
-<li>Startup settings - disable all
+<h2 id="general-performance-tips">General Performance Tips</h2>
+<ol type="1">
+<li><p>Upgrade to a 64-bit OS</p></li>
+<li><p>Startup settings - disable all</p>
 <ul>
 <li>Workbench › Editor: Restore View State</li>
 <li>Files: Restore Undo Stack</li>
 <li>Workbench: Startup Editor</li>
-</ul>
-</li>
-<li>Editing performance - disable all
+</ul></li>
+<li><p>Editing performance - disable all</p>
 <ul>
 <li>Minimap</li>
 <li>Word wrap</li>
 <li>CodeLens</li>
 <li>Format on Save</li>
 <li>Format on Paste</li>
-</ul>
-</li>
+</ul></li>
 <li><p>Other performance</p>
-
 <ul>
-<li>Telemetry: Enable Telemetry
-Does not improve performance but for security purposes.</li>
+<li><p>Telemetry: Enable Telemetry Does not improve performance but for security purposes.</p></li>
 <li><p>Search: Exclude</p>
-
-<p><code>json
-"search.exclude": {
-"**/node_modules": true,
-"**/bower_components": true,
-"**/temp": true,
-"**/env": true,
-"**/venv": true
-},
-</code></p></li>
+<div class="sourceCode" id="cb2"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="er">&quot;search.exclude&quot;:</span> <span class="fu">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&quot;**/node_modules&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="dt">&quot;**/bower_components&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="dt">&quot;**/temp&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="dt">&quot;**/env&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="dt">&quot;**/venv&quot;</span><span class="fu">:</span> <span class="kw">true</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span><span class="er">,</span></span></code></pre></div></li>
 <li><p>Files: Watcher Exclude</p>
-
-<p><code>json
-"files.watcherExclude": {
-    "**/.git/objects/**": true,
-    "**/.git/subtree-cache/**": true,
-    "**/node_modules/**": true,
-    "**/env/**": true,
-    "**/venv/**": true,
-    "env-*": true
-},
-</code></p></li>
+<div class="sourceCode" id="cb3"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="er">&quot;files.watcherExclude&quot;:</span> <span class="fu">{</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;**/.git/objects/**&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;**/.git/subtree-cache/**&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;**/node_modules/**&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;**/env/**&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;**/venv/**&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;env-*&quot;</span><span class="fu">:</span> <span class="kw">true</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span><span class="er">,</span></span></code></pre></div></li>
 <li><p>Files: Exclude</p>
-
-<p><code>json
-"files.exclude": {
-    "**/.archive": true,
-    "**/.git": true,
-    "**/.svn": true,
-    "**/.hg": true,
-    "**/CVS": true,
-    "**/temp/**": true,
-    "**/.classpath": true,
-    "**/.project": true,
-    "**/.settings": true,
-    "**/.factorypath": true,
-    "**/.DS_Store": true,
-    "**/.vscode": true,
-    "**/__pycache__": true,
-    "**/.pytest_cache": true,
-    "**/node_modules": true,
-    "venv": true,
-    "*.sublime-*": true,
-    "env*": true
-},
-</code></p></li>
-</ul>
-<span style="display:none">&#160;</span></li>
+<div class="sourceCode" id="cb4"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="er">&quot;files.exclude&quot;:</span> <span class="fu">{</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;**/.archive&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;**/.git&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;**/.svn&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;**/.hg&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;**/CVS&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;**/temp/**&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;**/.classpath&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;**/.project&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;**/.settings&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;**/.factorypath&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;**/.DS_Store&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;**/.vscode&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;**/__pycache__&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;**/.pytest_cache&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;**/node_modules&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;venv&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;*.sublime-*&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;env*&quot;</span><span class="fu">:</span> <span class="kw">true</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span><span class="er">,</span></span></code></pre></div></li>
+</ul></li>
 <li><p>Disable extensions for a workspace or via command line</p>
-
-<p><code>shell
-code --disable-extensions
-</code></p></li>
+<pre class="shell"><code>code --disable-extensions</code></pre></li>
 <li><p>Create extension sets e.g (Java, Python etc..) and load them as required.</p>
-
-<p><code>shell
-code --extensions-dir &lt;dir&gt;
-</code></p></li>
-<li><p>Clean cache periodically
-i.e. Folders under C:\Users\&lt;username>\AppData\Roaming\Code\</p>
-
+<pre class="shell"><code>code --extensions-dir &lt;dir&gt;</code></pre></li>
+<li><p>Clean cache periodically i.e. Folders under C:&lt;username&gt;<br />
+</p>
 <ul>
 <li>Cache</li>
 <li>CachedDate</li>
 <li>CachedExtensions</li>
 <li>Code Cache</li>
-</ul>
-<span style="display:none">&#160;</span></li>
+</ul></li>
 </ol>
-
-<h2 id="_troubleshooting_performance_issues_">Troubleshooting performance issues</h2>
-
-<ol>
+<h2 id="troubleshooting-performance-issues">Troubleshooting performance issues</h2>
+<ol type="1">
 <li><p>Experiencing slowness or a blank screen</p>
-
-<p><code>shell
-code --disable-gpu
-</code></p>
-
-<ul>
-<li>To set this permanently:
-<ul>
-<li>Run the <strong>Preferences: Configure Runtime Arguments</strong> command.</li>
-<li>Add <code>"disable-hardware-acceleration": true</code> in the opened argv.json.</li>
-<li>Restart VS Code.</li>
-</ul>
-</li>
-</ul>
-<span style="display:none">&#160;</span></li>
-<li><p>Installation appears to be corrupt with Unsupported message
-Reinstall VS Code.</p></li>
+<pre class="shell"><code>code --disable-gpu</code></pre>
+<p>To set this permanently:</p>
+<pre><code> - Run the **Preferences: Configure Runtime Arguments** command.
+ - Add `&quot;disable-hardware-acceleration&quot;: true` in the opened argv.json.
+ - Restart VS Code.</code></pre></li>
+<li><p>Installation appears to be corrupt with Unsupported message Reinstall VS Code.</p></li>
 </ol>
-
-<h2 id="_more_stuff_">More Stuff</h2>
-
+<h2 id="more-stuff">More Stuff</h2>
 <ul>
 <li><a href="https://github.com/Microsoft/vscode/wiki/Performance-Issues">Performance Issues · microsoft/vscode Wiki</a></li>
 </ul>
-
 <p>Tags: <a href='tag_productivity.html'>productivity</a>, <a href='tag_code.html'>code</a>, <a href='tag_vscode.html'>vscode</a></p>
 <!-- text end -->
 <!-- entry end -->
